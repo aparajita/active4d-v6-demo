@@ -1,0 +1,35 @@
+<% /*
+<fusedoc fuse="qry_validateLogin.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I validate a username and password and return a RowSet which contains
+		1 row if successful or no rows if not.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="name" scope="attributes" />
+			<string name="password" scope="attributes" />
+		</in>
+		<out>
+			<RowSet name="$qryUser" comments="will contain 1 row if success, no rows if failure">
+				<number name="id" />
+				<string name="name" />
+			</RowSet>
+		</out>
+	</io>
+</fusedoc>
+*/
+
+query([users]; [users]username = $attributes{"name"}; *)
+query([users]; &; [users]password = $attributes{"password"})
+
+if (records in selection([users]) = 1)
+	if (not(identical strings([users]password; $attributes{"password"})))
+		reduce selection([users]; 0)
+	end if
+else
+	reduce selection([users]; 0)
+end if
+
+$qryUser := RowSet.newFromSelection(->[users]; "id:[users]id; name:[users]username")
+$qryUser->first
+%>

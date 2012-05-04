@@ -1,0 +1,24 @@
+<% /*
+<fusedoc fuse="dsp_sed.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I display sed.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="$sedPath" />
+		</in>
+	</io>	
+</fusedoc>
+*/ 
+
+fusebox.head.setTitle(fusebox.head.getTitle + "/Session Editor")
+%>
+
+<div id="content">
+
+  <h1>sed - The Session Editor</h1>
+  
+  <% include($sedPath) %>
+  
+</div>
+

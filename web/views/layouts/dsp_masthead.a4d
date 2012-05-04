@@ -1,0 +1,13 @@
+<div id="masthead">
+
+  <%
+	// Reserve space for the logged in user's name and a logout button.
+	// The exact HTML will be set when the user logs in.
+	write(session{"user.info"})
+  %>
+
+  <div id="logo">
+    <a href="http://www.aparajitaworld.com/site/products/Active4D"><img src="/images/active4d-logo.gif" alt="Active4D"></a>
+  </div>
+
+</div>

@@ -1,0 +1,20 @@
+<% /*
+<fusedoc fuse="qry_update.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I create/update/delete an ingredients record depending on the user's action in the edit form.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="submitAction" scope="attributes" comments="update*|delete|cancel" />
+			<string name="timestamp" scope="attributes" />
+		</in>
+		<out>
+			<string name="$cudResult" />
+		</out>
+	</io>
+</fusedoc>
+*/
+
+// Let a4d.utils.cud do its magic. We want to do timestamp checking, so pass those values.
+$cudResult := a4d.utils.cud($attributes{"submitAction"}; ->[ingredients]; "demo.cudIngredients"; $attributes; ->[ingredients]timestamp; $attributes{"timestamp"})
+%>

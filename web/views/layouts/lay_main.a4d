@@ -1,0 +1,43 @@
+<% /*
+<fusedoc fuse="lay_main.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I am the master display layout. I assemble all of the pieces
+		of the page together.
+	</responsibilities>
+</fusedoc>
+*/
+include("dsp_htmlHeader.a4d")
+%>
+
+  <!-- begin masthead -->
+
+  <% include("dsp_masthead.a4d") %>
+
+  <!-- end masthead -->
+
+  <!-- begin navbar -->
+
+  <% //include("dsp_navbar.a4d") %>
+
+  <!-- end navbar -->
+
+  <!-- begin sidebars -->
+
+  <% include("dsp_sidebars.a4d") %>
+
+  <!-- end sidebars -->
+
+  <!-- begin content -->
+
+  <% write($fusebox{"layout"}) %>
+
+  <!-- end content -->
+
+  <!-- begin footer -->
+
+  <% include("dsp_footer.a4d") %>
+
+  <!-- end footer -->
+
+</body>
+</html>

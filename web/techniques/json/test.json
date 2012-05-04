@@ -1,0 +1,32 @@
+{
+	"rows": [
+		{
+			"name": "John Doe",
+			"age": 50,
+			"children": [
+				"Bill",
+				"Jill"
+			],
+			"birthdate": "Mar 31, 1961"
+		},
+		{
+			"name": "Jane Smith",
+			"age": 32,
+			"children": [
+				"Mary",
+				"Tom",
+				"Harry"
+			],
+			"birthdate": "1970-02-04T12:34:56"
+		}
+	],
+	"totals": {
+		"children": 5,
+		"people": 2
+	},
+	"holidays": [
+		"2012-04-13",
+		"2012-08-18",
+		"2012-08-27"
+	]
+}

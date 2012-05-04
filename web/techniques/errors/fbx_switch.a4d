@@ -1,0 +1,57 @@
+<% /*
+<fusedoc fuse="fbx_switch.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I am the switch statement that handles fuseactions in this circuit.
+		I delegate to the fuses responsible for handling a given fuseaction.
+	</responsibilities>
+</fusedoc>
+*/
+
+$fuseaction := $fusebox{"fuseaction"}
+$circuit := $fusebox{"circuit"}
+$customHandler := "techniques/errors/controllers/act_errorHandler.a4d"
+
+case of
+	:($fuseaction = "main")
+		$XFA_onDefaultError := '$circuit.defaultError'
+		$XFA_onCustomError := '$circuit.customError'
+		$XFA_onDefaultHttpError := '$circuit.defaultHttpError'
+		$XFA_onCustomHttpError := '$circuit.customHttpError'
+		$XFA_onDefaultUserError := '$circuit.defaultUserError'
+		$XFA_onCustomUserError := '$circuit.customUserError'
+		$XFA_onMissingCircuitError := '$circuit.missingCircuitError'
+		$XFA_onMissingActionError := '$circuit.missingActionError'
+		include("views/dsp_errorHandling.a4d")
+
+	:($fuseaction = "defaultError")
+		$errorHandler := "-"
+		include("controllers/act_executionError.a4d")
+
+	:($fuseaction = "customError")
+		$errorHandler := $customHandler
+		include("controllers/act_executionError.a4d")
+
+	:($fuseaction = "defaultUserError")
+		$errorHandler := "-"
+		include("controllers/act_userError.a4d")
+
+	:($fuseaction = "customUserError")
+		$errorHandler := $customHandler
+		include("controllers/act_userError.a4d")
+
+	:($fuseaction =~ "/^missing(Circuit|Action)Error$/")
+		$errorHandler := $customHandler
+		include("controllers/act_fuseboxError.a4d")
+
+	:($fuseaction = "defaultHttpError")
+		$errorHandler := "-"
+		include("controllers/act_httpError.a4d")
+
+	:($fuseaction = "customHttpError")
+		$errorHandler := "{0}?{1}=root.httpError" %% (filename of(requested url); fusebox.conf.fuseaction)
+		include("controllers/act_httpError.a4d")
+
+	else
+		$fusebox->invalidAction
+end case
+%>

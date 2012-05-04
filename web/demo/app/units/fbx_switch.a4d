@@ -1,0 +1,21 @@
+<% /*
+<fusedoc fuse="fbx_switch.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I am the switch statement that handles fuseactions in this circuit.
+		I delegate to the fuses responsible for handling a given fuseaction.
+	</responsibilities>
+</fusedoc>
+*/
+
+$fuseaction := $fusebox{"fuseaction"}
+
+// We delegate the list action to the common switch in our parent
+
+case of
+	:($fuseaction = "list")
+		include("../fbx_switch.a4d")
+
+    else
+    	$fusebox->invalidAction
+end case
+%>

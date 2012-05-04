@@ -1,0 +1,69 @@
+<% /*
+<fusedoc fuse="dsp_uploads.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I allow the user to upload a file.
+	</responsibilities>
+	<io>
+		<out>
+			<BLOB name="A4D_Upload" scope="form" comments="The blob that receives the uploaded file" />
+			<string name="f_info" scope="form" />
+			<string name="f_save" scope="form" comments="'yes' to save the uploaded file" />
+		</out>
+	</io>
+</fusedoc>
+*/
+
+fusebox.head.setTitle(fusebox.head.getTitle + "/Uploads")
+fusebox.head.addDumpStyles
+%>
+
+<div id="content">
+
+  <h1>Uploads</h1>
+
+  <form name="form1" method="post" action="<%=fusebox.makeURL($XFA_onSubmit)%>" enctype="multipart/form-data">
+
+    <p>Active4D makes it a snap to provide support for file uploads.
+	  After reading the &quot;File Uploads&quot; section of the Active4D
+	  Reference manual, take a look at the files in this circuit
+	  to see how to use the file upload commands in your web site.</p>
+
+	<div class="a4d-debug">
+	<table>
+	  <tr>
+	    <td colspan="2" class="title">Upload info</td>
+	  </tr>
+	  <tr>
+	    <td class="label">File to upload</td>
+	    <td>
+		  <input type="file" name="A4D_Upload">
+	    </td>
+	  </tr>
+	  <tr>
+	    <td class="label">Additional info</td>
+	    <td>
+		  <input type="text" name="f_info">
+	    </td>
+	  </tr>
+	  <tr>
+	    <td class="label">Saving</td>
+	    <td>
+		  <label>
+		  <input name="f_save" type="radio" value="no" checked="checked" style="margin-bottom: 4px">
+		  Don't save</label>
+
+		  <br>
+
+		  <label>
+		  <input name="f_save" type="radio" value="yes">
+		  Save</label>
+		</td>
+	  </tr>
+    </table>
+	</div>
+    <p style="margin-top:1em">
+	  <input type="submit" name="Submit" value="Upload">
+    </p>
+  </form>
+
+</div>

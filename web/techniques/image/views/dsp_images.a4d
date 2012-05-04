@@ -1,0 +1,86 @@
+<% /*
+<fusedoc fuse="dsp_images.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I display helpful information about using the image.a4d script and provide
+		a simple way to test it and see the results.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="$code"  comments="The code executed to load the image" />
+		</in>
+		<out>
+			<string name="f_source" scope="form" />
+		</out>
+	</io>
+</fusedoc>
+*/
+
+fusebox.head.setTitle(fusebox.head.getTitle + "/Images")
+%>
+
+<div id="content">
+
+  <h1>Images</h1>
+
+  <p>Active4D comes with a script called <strong>image.a4d</strong>
+  that allows you to dynamically load images
+  for display in your page. The images themselves may come from:</p>
+
+  <ul>
+    <li>Database fields (by value or record number)</li>
+    <li>The 4D picture library (by id or name)</li>
+    <li>Files on disk</li>
+    <li>Pictures passed back from methods (Active4D or 4D)</li>
+  </ul>
+
+  <p>To show a dynamic image on a page, you simply put a normal
+  <strong>&lt;img&gt;</strong> tag in your page, and set the <strong>src</strong>
+  attribute to a URL that points to <strong>image.a4d</strong>, passing parameters in the query
+  string that determine where the image comes from and what to retrieve.</p>
+
+  <p class="note">Each <strong>img</strong> tag in a page results in a separate request being sent
+  to the server. Because a separate request means a separate thread of execution, you
+  have to use the query string to pass information to the <strong>image.a4d</strong> script.</p>
+
+  <p>To see the <strong>image.a4d</strong> script in action, select an image source from the menu below to see sample code and the resulting image.</p>
+
+  <form action="<%=fusebox.makeURL($fusebox{"fqfa"})%>" method="get">
+    <% a4d.web.hideField(fusebox.conf.fuseaction; $fusebox{"fqfa"}) %>
+    <p>
+	  Image source:
+      <select name="f_source" size="1">
+	    <% a4d.web.buildOptionsFromLists("Please select...;Query by value;Query by record number;Picture library by id;Picture library by name;Disk file;Active4D method"; "-;value;recnum;lib-id;lib-name;file;method"; 0; $attributes{"f_source"}) %>
+	  </select>
+
+	  <label>
+	  <input type="checkbox" name="size" value="48" style="margin-left: 20px"
+	         <%=choose($attributes{"size"} # ""; "checked"; "")%>> Thumbnail
+	  </label>
+
+	  <input type="button" name="b_submit" value="Test" style="margin-left: 30px"
+	      onclick="if (this.form.f_source.selectedIndex != 0) this.form.submit()">
+	</p>
+  </form>
+
+  <%
+  	if (length($code) > 0)
+		execute($code)
+  %>
+
+  <div class="hr"></div>
+
+  <div id="image-results">
+
+    <h2>The image:</h2>
+    <p><img src="/image.a4d<%=$query%>" alt="Image not available"></p>
+
+    <br>
+
+	<h2>The code:</h2>
+    <code><%=mac to html("<%" + $code + """%>\n<img src="/image.a4d<%=$query%>" alt="Image not available" />"""; *)%></code>
+
+  </div>
+
+  <% end if %>
+
+</div>

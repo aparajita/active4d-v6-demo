@@ -1,0 +1,15 @@
+<% /*
+<fusedoc fuse="dsp_httpErrorHandler.a4d" language="Active4D" specification="2.0">
+    <responsibilities>
+        I am a custom http error handling page.
+    </responsibilities>
+</fusedoc>
+*/
+%>
+<div id="content">
+  <h1>Oops...</h1>
+
+  <p>We're sorry, but an http error has occurred. The following error info was passed in the response headers:</p>
+
+  <% a4d.debug.dump collection(response headers; "Response headers"; false; true; "/^X\-Error\-.*/") %>
+</div>

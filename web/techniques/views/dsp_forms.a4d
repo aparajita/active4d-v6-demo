@@ -1,0 +1,163 @@
+<% /*
+<fusedoc fuse="dsp_execute.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I display a form which demonstrates all of the form types except files.
+		After submitting the form the captured form variables are displayed.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="$XFA_onSubmit" comments="Go here to submit the form" />
+			<string name="$XFA_onUploads" comments="Go here to get to the uploads page" />
+			<string name="form_submitted" optional="true" comments="Set if this fuse was run from a posted form" />
+			<string name="b_submit" optional="true" condition="Set if the Submit button is clicked" />
+			<string name="b_cancel" optional="true" condition="Set if the Cancel button is clicked" />
+			<string name="b_image" optional="true" condition="Set if the Search button is clicked" />
+		</in>
+		<out>
+			<string name="f_text" scope="form" />
+			<string name="f_checkbox" scope="form" optional="true" condition="Sent if checked" />
+			<string name="f_radio" scope="form" />
+			<string name="f_menu" scope="form" />
+			<string name="f_list" scope="form" comments="single-select list" />
+			<string name="f_multilist" scope="form" comments="multi-select list" />
+		</out>
+	</io>
+</fusedoc>
+*/
+
+fusebox.head.addDumpStyles
+fusebox.head.setTitle(fusebox.head.getTitle + "/Forms")
+%>
+
+<div id="content">
+
+  <h1>Form handling</h1>
+
+    <form name="form1" method="post" action="<%=fusebox.makeURL($XFA_onSubmit)%>">
+
+    <p>One of the most common web site tasks is of course the gathering
+	  and saving of data via online forms. Active4D makes form handling
+	  a snap.</p>
+
+    <p>The form below contains all of the form elements you can use
+	  (except for file fields, see <a href="<%=fusebox.makeURL($XFA_onUploads)%>">Uploads</a>
+	  to see how to use those). Once you submit the form, scroll down
+	  to see how Active4D makes the form values easily available.</p>
+
+    <div class="a4d-debug">
+    <table>
+	  <tr>
+	    <th>Type</th>
+	    <th>Value</th>
+	    <th>Field name</th>
+	  </tr>
+	  <tr>
+	    <td class="label">Text</td>
+	    <td><input type="text" name="f_text"></td>
+	    <td>f_text</td>
+	  </tr>
+	  <tr>
+	    <td class="label">Checkbox</td>
+	    <td>
+		  <input type="checkbox" name="f_checkbox" id="f_checkbox" value="1">
+		  <label for="f_checkbox">This is cool</label>
+	    </td>
+	    <td>f_checkbox</td>
+	  </tr>
+	  <tr>
+	    <td class="label">Radio buttons</td>
+	    <td>
+		  <label>
+		  <input type="radio" name="f_radio" value="cool" checked="checked">
+		  Cool</label>
+		  &nbsp;&nbsp;&nbsp;
+		  <label>
+		  <input type="radio" name="f_radio" value="way cool">
+		  Way cool</label>
+	    </td>
+	    <td>r_radio</td>
+	  </tr>
+	  <tr>
+	    <td class="label">Menu</td>
+	    <td>
+		  <select name="f_menu">
+		    <option selected="selected">One</option>
+		    <option>Two</option>
+		    <option>Three</option>
+		  </select>
+	    </td>
+	    <td>f_menu</td>
+	  </tr>
+	  <tr>
+	    <td class="label">Single-choice list</td>
+	    <td>
+		  <select name="f_list" size="3">
+		    <option selected="selected">One</option>
+		    <option>Two</option>
+		    <option>Three</option>
+		  </select>
+	    </td>
+	    <td>f_list</td>
+	  </tr>
+	  <tr>
+	    <td class="label">Multi-choice list</td>
+	    <td>
+		  <select name="f_multilist" size="3" multiple="multiple">
+		    <option selected="selected">One</option>
+		    <option>Two</option>
+		    <option>Three</option>
+		  </select>
+	    </td>
+	    <td>f_multilist</td>
+	  </tr>
+	  <tr>
+	    <td class="label">Image field</td>
+	    <td>
+		  <input type="image" name="b_image" src="/images/search-button.gif" alt="Search">
+	    </td>
+	    <td>b_image</td>
+	  </tr>
+    </table>
+    </div>
+
+    <br>
+
+    <p>
+	  <input type="submit" name="b_submit" value="Submit">
+	  &nbsp;&nbsp;
+	  <input type="submit" name="b_cancel" value="Cancel">
+	  <% a4d.web.hideField("form_submitted"; 1) %>
+    </p>
+    </form>
+
+  <% if ($attributes{"form_submitted"} # "") %>
+
+  <div class="hr"></div>
+
+  <p class="note">
+    <%
+	    case of
+		    :($attributes{"b_submit"} # "")
+			    write("You clicked <strong>Submit</strong>.")
+
+		    :($attributes{"b_cancel"} # "")
+			    write("You clicked <strong>Cancel</strong>.")
+
+		    :(collection has($attributes; "b_image@"; *))
+			    write("You clicked <strong>Search</strong>. Note that an image field actually generates two variables: name.x and name.y, which contain the x and y coordinates you clicked within the image.")
+	    end case
+    %>
+  </p>
+
+  <p>Below you see the contents of the <strong>$attributes</strong> collection.</p>
+
+  <p>Note that the button clicked becomes a collection item, which
+    allows you to easily test which button was clicked, as the code
+    in this page does.</p>
+
+  <%
+    	a4d.debug.dump form variables
+     end if
+  %>
+
+</div>

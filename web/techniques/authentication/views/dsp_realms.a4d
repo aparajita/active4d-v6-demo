@@ -1,0 +1,63 @@
+<% /*
+<fusedoc fuse="dsp_realms.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I show information about realms.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="$XFA_onAuthenticate" comments="Go here to access the protected realm" />
+		</in>
+	</io>
+</fusedoc>
+*/
+
+fusebox.head.setTitle(fusebox.head.getTitle + "/Security Realms")
+%>
+
+<div id="content">
+
+  <h1>Security Realms</h1>
+
+  <p>With Active4D you can quickly and easily define security
+  realms for authenticating users with the browser's username/password dialog.</p>
+
+  <p>There are three steps to using security realms:</p>
+
+  <ol>
+    <li>Define one or more realms in <strong>Realms.ini</strong>. In this site
+	  we have defined the query string &quot;?action=techniques.authenticate&quot;
+	  as being in the realm &quot;realm_test&quot;.</li>
+
+    <li>Check the username and password in the <strong>On Authenticate</strong>
+	  event handler in <strong>Active4D.a4l</strong>. If they are not valid, call
+	  the <strong>authenticate</strong> command.</li>
+
+    <li>If authentication fails or the user cancels, a default message is displayed.
+	  You may want to define a user-friendly page to display instead. In Fusebox you
+	  can do so by following these steps:
+
+	  <ol>
+	    <li>Create a file called "authentication_failed.a4d" in the &lt;web&gt;/controller directory.
+		  The file contains the following code:<br><br>
+
+		  <code>&lt;%
+$attributes := new collection(fusebox.conf.fuseaction; &quot;root.authenticationFailed&quot;)
+include(&quot;/index.a4d&quot;)
+%&gt;</code>
+
+          You may of course define the fuseaction to be whatever is appropriate for your site.
+		</li>
+
+        <li>Create a fuseaction handler for the "authenticationFailed" fuseaction that
+		  displays the error message you want.</li>
+	  </ol></li>
+  </ol>
+
+  <p>The first time you attempt to access a protected realm,
+    the browser's authentication dialog will appear. The username is &quot;foo&quot;, the
+    password is &quot;bar&quot;. Both are case-sensitive. Try entering wrong information or
+	cancelling first to see what happens.</p>
+
+  <p><a href="<%=fusebox.makeURL($XFA_onAuthenticate)%>">Access the protected realm</a></p>
+
+</div>

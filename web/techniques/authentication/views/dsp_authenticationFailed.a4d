@@ -1,0 +1,54 @@
+<% /*
+<fusedoc fuse="dsp_authenticationFailed.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I show authentication information after an authentication failure.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="$XFA_onAuthenticate" comments="Go here to access the protected realm" />
+		</in>
+	</io>
+</fusedoc>
+*/
+
+fusebox.head.setTitle(fusebox.head.getTitle + "/Security Realms")
+fusebox.head.addDumpStyles
+%>
+
+<div id="content">
+
+  <h1>Security Realms</h1>
+
+  <p>You cancelled the authentication dialog. Here's the info I have for the most
+  recent authentication attempt:</p>
+
+  <div class="a4d-debug">
+  <table>
+    <tr>
+	  <th>Info</th>
+	  <th>Value</th>
+	</tr>
+    <tr>
+	  <td class="label">Username</td>
+	  <td><%=enclose(auth user)%></td>
+    </tr>
+    <tr>
+	  <td class="label">Password</td>
+	  <td><%=enclose(auth password)%></td>
+    </tr>
+
+    <tr>
+	  <td class="label">Realm</td>
+	  <td><%=enclose(current realm)%></td>
+    </tr>
+  </table>
+  </div>
+
+  <br>
+
+  <p>If you want to try again, the username is &quot;foo&quot;, the password is &quot;bar&quot;.
+    Both are case-sensitive.</p>
+
+  <p><a href="<%=fusebox.makeURL($XFA_onAuthenticate)%>">Try again</a></p>
+
+</div>

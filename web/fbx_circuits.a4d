@@ -1,0 +1,34 @@
+<% /*
+<fusedoc fuse="fbx_circuits.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I define the circuits structure used with Fusebox 3.0. Use slashes ("/") to delimit the circuit mapping, i.e.: $fusebox{"circuits"}{"red"} := "root/folder/redCircuit";
+	</responsibilities>	
+	<io>
+		<out>
+			<string name="$fusebox{'circuits'}{*}" />
+		</out>
+	</io>
+</fusedoc>
+*/
+
+$fusebox{"circuits"}{"root"} := "root"
+$fusebox{"circuits"}{"checker"} := "root/checker"
+$fusebox{"circuits"}{"techniques"} := "root/techniques"
+$fusebox{"circuits"}{"errors"} := "root/techniques/errors"
+$fusebox{"circuits"}{"execute"} := "root/techniques/execute"
+$fusebox{"circuits"}{"images"} := "root/techniques/image"
+$fusebox{"circuits"}{"realms"} := "root/techniques/authentication"
+$fusebox{"circuits"}{"sessions"} := "root/techniques/sessions"
+$fusebox{"circuits"}{"uploads"} := "root/techniques/uploads"
+
+$fusebox{"circuits"}{"demo"} := "root/demo"
+$fusebox{"circuits"}{"login"} := "root/demo/login"
+$fusebox{"circuits"}{"app"} := "root/demo/app"
+$fusebox{"circuits"}{"units"} := "root/demo/app/units"
+$fusebox{"circuits"}{"vendors"} := "root/demo/app/vendors"
+$fusebox{"circuits"}{"ingredients"} := "root/demo/app/ingredients"
+
+$fusebox{"circuits"}{"login-ajax"} := "root/demo-ajax/login"
+$fusebox{"circuits"}{"app-ajax"} := "root/demo-ajax/app"
+$fusebox{"circuits"}{"vendors-ajax"} := "root/demo-ajax/app/vendors"
+%>

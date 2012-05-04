@@ -1,0 +1,16 @@
+<% /*
+<fusedoc fuse="act_executionError.a4d" language="Active4D" specification="2.0">
+    <responsibilities>
+        I force an execution error to occur.
+    </responsibilities>
+    <io>
+        <in>
+            <string name="$errorHandler" comments="url of error handler script" />
+        </in>
+    </io>
+</fusedoc>
+*/
+
+set error page($errorHandler)
+$foo := $bar  // this will cause an error
+%>

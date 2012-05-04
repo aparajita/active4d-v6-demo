@@ -1,0 +1,69 @@
+<% /*
+<fusedoc fuse="dsp_licenseInfo.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I show an example of building a dynamic link.
+	</responsibilities>
+</fusedoc>
+*/ 
+
+fusebox.head.setTitle(fusebox.head.getTitle + "/Links")
+%>
+
+<div id="content">
+
+  <h1>Creating Dynamic Links and Query Strings</h1>
+  
+  <p>One of the most common tasks in a dynamic web site programming is the generation
+  of dynamic links. For example, if you are displaying a contact name, 
+  you may want to generate a link to edit the contact or to send an email
+  to that contact.</p>
+  
+  <p>In Fusebox, you construct a link in two steps:</p>
+  
+  <ol>
+    <li>Build a query string with the parameters you want to pass to the link target
+	using <strong>build query string</strong>.</li>
+	
+	<li>Use <strong>fusebox.makeURL</strong> to create the link URL.</li>
+  </ol>
+	
+  <h2>Example</h2>
+  
+  <p>We will construct a link pointing to this page that passes two parameters,
+  the tickcount when the link was constructed, and a random command name. Here
+  is the code we will use:</p>
+  
+  <% 
+  	$code := """
+$command := get indexed string(8; random between(1; 300))
+$query := build query string("-p"; "tickcount"; tickcount; \\\\
+                                   "command"; $command)
+"""
+	execute($code)
+  %>
+  
+  <p><code>&lt;%<%=mac to html($code + """%>\n<a href="<%=fusebox.makeURL($fusebox{"fqfa"}; $query)%>">Click me!</a>"""; *)%></code></p>
+  
+  <p class="note">Note that we passed the &quot;-a&quot; (append) switch to 
+  <strong>build query string</strong>. This is necessary when building a query for use with
+  <strong>fusebox.makeURL</strong> because in addition to your query parameters
+  there is always the fuseaction query parameter.</p>
+  
+  <h2>The generated link:</h2>
+  
+  <p><a href="<%=fusebox.makeURL($fusebox{"fqfa"}; $query)%>">Click me!</a></p>
+  
+  <% if (count query params > 0) %>
+  
+  <div class="hr"></div>
+  
+  <p>Here are the query parameters passed to this page. Note there will always be 
+  an &quot;<%=fusebox.conf.fuseaction%>&quot; parameter since this is Fusebox:</p>
+  
+  <%
+  		a4d.debug.dump query params
+	 end if
+  %>
+
+</div>
+

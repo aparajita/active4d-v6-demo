@@ -1,0 +1,40 @@
+<% /*
+<fusedoc fuse="dsp_searchBox.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I show a search box for searching names.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="$XFA_onSearch" />
+			<string name="nm" scope="attributes" optional="yes" comments="previous search text" />
+		</in>
+		<out>
+			<string name="f_search" scope="form" comments="search text" />
+		</out>
+		<passthrough>
+			<string name="bst" scope="attributes" optional="yes" comments="batch start index" />
+		</passthrough>
+	</io>
+</fusedoc>
+*/ %>
+
+  <table id="list-search">
+    <tr>
+	  <td>
+        <form action="<%=fusebox.makeURL($XFA_onSearch)%>" method="post">
+	      <input name="f_search" type="text" value="<%=$attributes{"nm"}%>" size="20"
+		         title="Use * to do wildcard matching">
+		  &nbsp;&nbsp;
+	      <input name="b_search" type="submit" value="Search">
+
+	      <%
+		      // If a search is current, display a Show All button
+		      if ($attributes{"nm"} # "")
+	      %>
+	      &nbsp;<input name="b_showAll" type="submit" value="Show All">
+	      <%  end if %>
+        </form>
+	  </td>
+    </tr>
+  </table>
+

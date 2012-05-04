@@ -1,0 +1,65 @@
+<% /*
+<fusedoc fuse="dsp_errorHandling.a4d" language="Active4D" specification="2.0">
+  <responsibilities>
+    I am a custom error handling page.
+  </responsibilities>
+</fusedoc>
+*/
+
+fusebox.head.setTitle(fusebox.head.getTitle + "- Execution Error")
+%>
+
+<div id="content">
+
+  <h1>Oops...</h1>
+
+  <p>We're sorry, but an error has occurred. The items in the list below
+  are error variables received from Active4D.</p>
+
+  <%
+    a4d.debug.dump collection($attributes; ""; true; true; "/^a4d_err_.+/")
+
+    $msg := get throw message
+    $code := get throw code
+    $whatHappened := "Based on the throw code, it looks like "
+
+    case of
+        :($code = fusebox.kInvalidCircuitError)
+            set response status(404)
+            $whatHappened += "an invalid circuit was requested."
+
+        :($code = fusebox.kInvalidActionError)
+            set response status(404)
+            $whatHappened += "an invalid action was requested."
+
+        else
+            $whatHappened += "a user error was thrown."
+    end case
+
+    // 'get error status' contains the status code that got us here.
+    // During execution of an error handler, 'get response status' is HTTP Status OK (200),
+    // unless the error handler sets it specifically.
+    if (get response status # HTTP Status OK)
+        $status := get response status
+    else
+        $status := get error status
+    end if
+
+    if ($code)
+  %>
+    <div class="a4d-debug" style="margin-top:2em">
+        <p><%= $whatHappened %></p>
+        <table>
+            <tr>
+                <td class="label">throw message</td><td><%=$msg%></td>
+            </tr>
+            <tr>
+                <td class="label">throw code</td><td><%=$code%></td>
+            </tr>
+        </table>
+    </div>
+  <% end if %>
+
+  <p style="margin-top:2em">The response status will be <%= $status %>.</p>
+
+</div>

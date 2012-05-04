@@ -1,0 +1,116 @@
+<% /*
+<fusedoc fuse="dsp_edit.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I show a form for editing an ingredient.
+	</responsibilities>
+	<io>
+		<in>
+			<RowSet name="$qryIngredient">
+				<number name="id" />
+				<string name="name" />
+				<number name="qty" />
+				<number name="unit_id" />
+				<number name="price" />
+				<number name="vendor_id" />
+				<string name="timestamp" />
+			</RowSet>
+			<string name="$XFA_onSubmit" />
+		</in>
+		<out>
+			<string name="f_name" scope="form" />
+			<string name="f_qty" scope="form" />
+			<string name="f_unit_id" scope="form" />
+			<string name="f_vendor_id" scope="form" />
+			<string name="f_price" scope="form" />
+			<string name="timestamp" scope="form" />
+			<string name="submitAction" scope="form" comments="update|cancel|delete" />
+		</out>
+		<passthrough>
+			<string name="id" scope="attributes" comments="ingredient id" />
+			<string name="bst" scope="attributes" optional="yes" comments="batch start index from batch link" />
+			<string name="nm" scope="attributes" optional="yes" condition="if ingredient name link is clicked" comments="the URL encoded search text" />
+		</passthrough>
+	</io>
+</fusedoc>
+*/
+
+$breadcrumbs->write
+$qryIngredient->first
+$row := $qryIngredient->getRow
+%>
+
+<script type="text/javascript">
+	function submitForm() {
+		if (document.form.submitAction.value == 'delete') {
+			return (confirm('Are you sure you want to delete this record?'));
+		}
+
+		return true;
+	}
+</script>
+
+<div id="content">
+
+  <div id="demo-form">
+    <form name="form" action="<%=fusebox.makeURL($XFA_onSubmit)%>" method="post" onsubmit="return submitForm();">
+      <%
+	  	a4d.web.embedCollectionItems($attributes; "id;bst;nm")
+		a4d.web.hideField("timestamp"; $row{"timestamp"})
+		a4d.web.hideField("submitAction"; "")
+	  %>
+
+      <table>
+        <tr>
+	      <td class="title" colspan="2">Ingredient Info</td>
+	    </tr>
+	    <tr>
+	      <td class="label">Name</td>
+	      <td><input name="f_name" id="f_name" type="text" value="<%=$row{"name"}%>" size="40"></td>
+	    </tr>
+	    <tr>
+	      <td class="label">Vendor</td>
+	      <td>
+		    <select name="f_vendor_id" size="1">
+			  <% =vendors.makeOptionMenu($row{"vendor_id"}) %>
+			</select>
+		  </td>
+	    </tr>
+	    <tr>
+	      <td class="label">Ship Qty</td>
+	      <td>
+		    <input name="f_qty" type="text" value="<%=$row{"qty"}%>" size="7">
+			&nbsp;
+			<select name="f_unit_id" size="1">
+			  <% =units.makeOptionMenu($row{"unit_id"}) %>
+			</select>
+		  </td>
+	    </tr>
+	    <tr>
+	      <td class="label">Price</td>
+	      <td><input name="f_price" type="text" value="<% write($row{"price"}; "###.00") %>" size="7"></td>
+	    </tr>
+      </table>
+
+      <br>
+
+      <input name="b_save" type="submit" value="Save" onclick="this.form.submitAction.value = 'update*'">
+	  &nbsp;
+      <input name="b_cancel" type="submit" value="Cancel" onclick="this.form.submitAction.value = 'cancel'">
+
+      <% if ($attributes{"id"} # "-1")%>
+      <input name="b_delete" type="submit" value="Delete" style="margin-left: 70px" onclick="this.form.submitAction.value = 'delete'">
+      <% end if %>
+
+    </form>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+	setTimeout(function() {
+		var el = document.getElementById('f_name');
+		el.focus();
+		el.select();
+	}, 250);
+</script>
+

@@ -1,0 +1,58 @@
+<% /*
+<fusedoc fuse="dsp_loginForm.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I show a login form.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="$XFA_onSubmit" />
+			<string name="err" scope="attributes" optional="yes" comments="1 if login invalid" />
+		</in>
+		<out>
+			<string name="f_username" scope="form" />
+			<string name="f_password" scope="form" />
+		</out>
+	</io>
+</fusedoc>
+*/
+
+fusebox.head.setTitle(fusebox.head.getTitle + " - Login")
+%>
+
+<div id="content">
+
+  <p>Welcome to the demo! Please login to enter the site.</p>
+
+  <form action="<%=fusebox.makeURL($XFA_onSubmit)%>" method="post">
+    <div id="demo-form">
+
+	<% if ($attributes{"err"} = "1") %>
+	<p class="note warning">Invalid username or password. Try tinytim/tulips.</p>
+	<% end if %>
+
+    <table>
+      <tr>
+	    <td class="title" colspan="2">Login</td>
+	  </tr>
+	  <tr>
+	    <td class="label">Username</td>
+	    <td><input name="f_username" id="f_username" type="text" size="30" maxlength="40"></td>
+	  </tr>
+	  <tr>
+	    <td class="label">Password</td>
+	    <td><input name="f_password" type="password" size="30" maxlength="20"></td>
+	  </tr>
+    </table>
+    <input name="b_login" type="submit" class="button" value="Login">
+    </div>
+  </form>
+
+</div>
+
+<script type="text/javascript">
+	setTimeout(function() {
+		var el = document.getElementById('f_username');
+		el.focus();
+		el.select();
+	}, 250);
+</script>

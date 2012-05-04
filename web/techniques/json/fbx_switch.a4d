@@ -1,0 +1,32 @@
+<% /*
+<fusedoc fuse="fbx_switch.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I am the switch statement that handles fuseactions in this circuit.
+		I delegate to the fuses responsible for handling a given fuseaction.
+	</responsibilities>
+</fusedoc>
+*/
+
+$fuseaction := $fusebox{"fuseaction"}
+$circuit := $fusebox{"circuit"}
+
+case of
+	:($fuseaction = "main")
+		$XFA_onWrite := '$circuit.write'
+		$XFA_onParse := '$circuit.parse'
+		$XFA_onConvert := '$circuit.convert'
+		include("views/dsp_json.a4d")
+
+	:($fuseaction = "write")
+		include("controllers/act_write.a4d")
+
+	:($fuseaction = "parse")
+		include("controllers/act_parse.a4d")
+
+	:($fuseaction = "convert")
+		include("controllers/act_convert.a4d")
+
+	else
+		fusebox->invalidAction
+end case
+%>

@@ -1,0 +1,37 @@
+<% /*
+<fusedoc fuse="qry_selectOne.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I select a single ingredient given an id.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="id" scope="attributes" />
+		</in>
+		<out>
+			<RowSet name="$qryIngredient">
+				<number name="id" />
+				<string name="name" />
+				<number name="qty" />
+				<number name="unit_id" />
+				<number name="price" />
+				<number name="vendor_id" />
+				<string name="timestamp" />
+			</RowSet>
+		</out>
+	</io>
+</fusedoc>
+*/
+
+query([ingredients]; [ingredients]id = num($attributes{"id"}))
+
+$map := """
+id:			[ingredients]id;
+name:		[ingredients]name;
+qty:		[ingredients]ship_qty;
+unit_id:	[ingredients]ship_unit_id;
+price:		[ingredients]price;
+vendor_id:	[ingredients]vendor_id;
+timestamp:	[ingredients]timestamp"""
+
+$qryIngredient := RowSet.newFromSelection(->[ingredients]; $map)
+%>

@@ -1,0 +1,28 @@
+<% /*
+<fusedoc fuse="fbx_switch.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I am the switch statement that handles fuseactions in this circuit.
+		I delegate to the fuses responsible for handling a given fuseaction.
+	</responsibilities>
+</fusedoc>
+*/
+
+$fuseaction := $fusebox{"fuseaction"}
+
+case of
+	:($fuseaction = "main")
+		$XFA_onSed := '$fusebox{"circuit"}.sed'
+		$XFA_onMonitor := '$fusebox{"circuit"}.monitor'
+		include("views/dsp_sessions.a4d")
+
+	:($fuseaction = "sed")
+		$sedPath := "/sed.a4d"
+		include("views/dsp_sed.a4d")
+
+	:($fuseaction = "monitor")
+		include("views/dsp_monitor.a4d")
+
+	else
+		$fusebox->invalidAction
+end case
+%>

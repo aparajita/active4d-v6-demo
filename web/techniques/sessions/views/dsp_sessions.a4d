@@ -1,0 +1,49 @@
+<% /*
+<fusedoc fuse="dsp_sessions.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I display information about sessions and a link to sed.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="$XFA_onSed" />
+			<string name="$XFA_onMonitor" />
+		</in>
+	</io>	
+</fusedoc>
+*/ 
+
+fusebox.head.setTitle(fusebox.head.getTitle + "/Sessions")
+%>
+
+<div id="content">
+
+  <h1>Sessions</h1>
+  
+  <p>When you login to a web site, how does it know you are logged in? The answer is easy:
+     <strong>sessions</strong>. Without sessions, your web site has no (easy) way of 
+	 maintaining state information about the user. That would be like trying to program in 
+	 4D without process variables!</p>
+	 
+  <p>Active4D gives you world class automatic session support out of the box. The session support
+     alone is worth the price of admission... just ask anyone who has tried to implement
+	 session support on their own!</p>
+	 
+  <p>Active4D comes with several tools to help you debug sessions:</p>
+  
+  <ul>
+    <li>Within 4D you can use the session monitor to view the status and contents 
+	of all current sessions.</li>
+	
+	<li>Within a web page you can use <strong>sed.a4d</strong>, the Active4D session editor, 
+	to edit the current session.</li>
+	
+	<li>Within a web page you can use <strong>a4d.debug.dump session stats</strong>
+	to view statistics on all current sessions. By using a &lt;meta refresh&gt; tag,
+	you can build a page that acts as a remote session monitor.</li>
+  </ul>
+	 
+  <p><a href="<%=fusebox.makeURL($XFA_onSed)%>">Try the session editor</a></p>
+
+  <p><a href="<%=fusebox.makeURL($XFA_onMonitor)%>">Try the session monitor</a></p>
+  
+</div>

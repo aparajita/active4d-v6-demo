@@ -1,0 +1,44 @@
+<% /*
+<fusedoc fuse="dsp_timeout.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I display a menu of activities for the user to perform.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="$XFA_onListVendors" />
+			<string name="$XFA_onAddVendor" />
+			<string name="$XFA_onListIngredients" />
+			<string name="$XFA_onAddIngredient" />
+			<string name="$XFA_onListUnits" />
+		</in>
+	</io>	
+</fusedoc>
+*/ 
+
+fusebox.head.setTitle(fusebox.head.getTitle + " - Dashboard")
+$breadcrumbs->write
+%>
+  
+<div id="content">
+
+  <h1>Dashboard</h1>
+  
+  <p>Welcome to the demo. Please select an activity below.</p>
+  
+  <ul>
+    <li><a href="<%=fusebox.makeURL($XFA_onListVendors)%>">List vendors</a></li>
+	
+    <li><a href="<%=fusebox.makeURL($XFA_onAddVendor; "id=-1")%>">Add vendor</a></li>
+  </ul>
+  
+  <ul style="margin-top: 2em">
+    <li><a href="<%=fusebox.makeURL($XFA_onListIngredients)%>">List ingredients</a></li>
+
+    <li><a href="<%=fusebox.makeURL($XFA_onAddIngredient; "id=-1")%>">Add ingredient</a></li>
+  </ul>
+  
+  <ul style="margin-top: 2em">
+    <li><a href="<%=fusebox.makeURL($XFA_onListUnits)%>">List units</a></li>
+  </ul>
+
+</div>

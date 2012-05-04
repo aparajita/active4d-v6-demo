@@ -1,0 +1,36 @@
+<% /*
+<fusedoc fuse="dsp_timeout.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I tell the user the session has timed out or an unauthorized access was attempted.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="$XFA_onLogin" />
+		</in>
+	</io>	
+</fusedoc>
+*/ 
+
+fusebox.head.setTitle(fusebox.head.getTitle + " - Unauthorized Access")
+%>
+
+<div id="content">
+
+  <h1>We're sorry...</h1>
+  
+  <p>You have attempted to access a member-only page without a valid login.
+  This might be because:</p>
+  
+  <ul>
+    <li>You had logged in but didn't access the site for more than 10 minutes.</li>
+	
+	<li>You tried to access a member-only page without first logging in.</li>
+	
+	<li>The server was restarted.</li>
+	
+	<li>Aliens have invaded your computer.</li>
+  </ul>
+  
+  <p>Feel free to <a href="<%=fusebox.makeURL($XFA_onLogin)%>">login again</a>.</p>
+
+</div>

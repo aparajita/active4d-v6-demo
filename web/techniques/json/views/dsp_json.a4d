@@ -1,0 +1,14 @@
+<% /*
+<fusedoc fuse="dsp_json.a4d" language="Active4D" specification="2.0">
+    <responsibilities>
+        I display info about JSON handling in Active4D with some demo links.
+    </responsibilities>
+    <io>
+        <in>
+            <string name="$XFA_onWrite" />
+            <string name="$XFA_onParse" />
+            <string name="$XFA_onConvert" />
+        </in>
+    </io>
+</fusedoc>
+%>

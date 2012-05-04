@@ -1,0 +1,55 @@
+<% /*
+<fusedoc fuse="act_processLogin.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I validate a username and password and return a RowSet which contains
+		1 row if successful or no rows if not.
+	</responsibilities>
+	<io>
+		<in>
+			<RowSet name="$qryUser" comments="will contain 1 or 0 rows, 1 if success">
+				<number name="id" />
+				<string name="name" />
+			</RowSet>
+		</in>
+		<out>
+			<string name="user.id" scope="session" />
+			<string name="user.name" scope="session" />
+			<JSON>
+				<boolean name="success" comments="Ext wants this in form submit results" />
+				<boolean name="valid" comments="true if name/password valid" />
+			</JSON>
+		</out>
+	</io>
+</fusedoc>
+*/
+
+$json := a4d.json.new
+
+// Ext wants a "success" flag to indicate if the form was successfully posted
+$json->add("success"; true)
+
+if ($qryUser->rowCount = 1)
+	
+	// Save info about the user
+	$qryUser->first
+	$row := $qryUser->getRow
+	session{"user.id"} := $row{"id"}
+	session{"user.name"} := $row{"name"}
+	
+	// Our layout reserves an area in the masthead for the user name and Logout button.
+	// We generate that HTML in a script and put it into the session. The layout gets
+	// the HTML from the session. If the user is not logged in, there is no current
+	// session, so the layout shows nothing in that area. By only referencing a session item,
+	// the layout doesn't have to know any implementation details about when
+	// a user is logged in and where to get the user's info.
+	
+	include into("../views/dsp_userInfo.a4d"; session{"user.info"})
+	
+	$json->add("valid"; true)
+else
+	$json->add("valid"; false)
+end if
+
+$json->write
+%>
+

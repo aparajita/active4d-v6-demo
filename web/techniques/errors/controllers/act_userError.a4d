@@ -1,0 +1,18 @@
+<% /*
+<fusedoc fuse="act_userError.a4d" language="Active4D" specification="2.0">
+    <responsibilities>
+        I force a user error to occur.
+    </responsibilities>
+    <io>
+        <in>
+            <string name="$errorHandler" comments="url of error handler script" />
+        </in>
+    </io>
+</fusedoc>
+*/
+
+define(kError_UserDefined; 1)
+
+set error page($errorHandler)
+throw(kError_UserDefined; "This is a user error")
+%>

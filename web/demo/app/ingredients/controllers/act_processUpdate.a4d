@@ -1,0 +1,17 @@
+<% /*
+<fusedoc fuse="act_processUpdate.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I determine what to do after a record has been saved.
+	</responsibilities>
+	<io>
+		<out>
+			<string name="$updateSuccessHook" comments="code to execute on successful save" />
+		</out>
+	</io>	
+</fusedoc>
+*/
+
+// Delegate to the generic handler
+$updateSuccessHook := ""
+include("../../controllers/act_processUpdate.a4d")
+%>

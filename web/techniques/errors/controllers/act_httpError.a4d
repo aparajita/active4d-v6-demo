@@ -1,0 +1,17 @@
+<% /*
+<fusedoc fuse="act_httpError.a4d" language="Active4D" specification="2.0">
+    <responsibilities>
+        I force an http error to occur.
+    </responsibilities>
+    <io>
+        <in>
+            <string name="$errorHandler" comments="url of error handler script" />
+        </in>
+    </io>
+</fusedoc>
+*/
+
+set http error page($errorHandler)
+set response status(404)
+%>
+

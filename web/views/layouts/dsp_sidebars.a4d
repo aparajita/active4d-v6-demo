@@ -1,0 +1,36 @@
+<div id="nav">
+  <ul>
+    <li><span>Techniques</span>
+	<ul>
+	  <li><a href="<%=fusebox.makeURL("techniques.basics")%>">Basics</a></li>
+	  <li><a href="<%=fusebox.makeURL("errors.main")%>">Error Handling</a></li>
+	  <li><a href="<%=fusebox.makeURL("execute.main")%>">Executing Code</a></li>
+	  <li><a href="<%=fusebox.makeURL("techniques.forms")%>">Forms</a></li>
+	  <li><a href="<%=fusebox.makeURL("images.main")%>">Images</a></li>
+	  <li><a href="<%=fusebox.makeURL("techniques.licenseInfo")%>">License Info</a></li>
+	  <li><a href="<%=fusebox.makeURL("techniques.links")%>">Links</a></li>
+	  <li><a href="<%=fusebox.makeURL("techniques.requestInfo")%>">Request Info</a></li>
+	  <li><a href="<%=fusebox.makeURL("realms.main")%>">Realms</a></li>
+	  <li><a href="<%=fusebox.makeURL("sessions.main")%>">Sessions</a></li>
+	  <li><a href="<%=fusebox.makeURL("techniques.timestamps")%>">Timestamps</a></li>
+	  <li><a href="<%=fusebox.makeURL("uploads.main")%>">Uploads</a></li>
+	</ul>
+	</li>  
+    <li><span>Demo</span>
+	<ul>
+	  <li><a href="<%=fusebox.makeURL("login.main")%>">Login</a></li>
+	  <li><a href="<%=fusebox.makeURL("app.main")%>">Dashboard</a></li>
+	  <li><a href="<%=fusebox.makeURL("vendors.list")%>">Vendors</a></li>
+	  <li><a href="<%=fusebox.makeURL("ingredients.list")%>">Ingredients</a></li>
+	  <li><a href="<%=fusebox.makeURL("units.list")%>">Units</a></li>
+    </ul>
+	</li>
+    <li><span>Ajax Demo</span>
+	<ul>
+	  <li><a href="<%=fusebox.makeURL("login-ajax.main")%>">Login</a></li>
+	  <li><a href="<%=fusebox.makeURL("vendors-ajax.list")%>">Vendors</a></li>
+    </ul>
+	</li>
+  </ul>
+</div>
+

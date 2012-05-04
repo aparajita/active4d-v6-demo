@@ -1,0 +1,43 @@
+<% /*
+<fusedoc fuse="dsp_updateFailure.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I a message indicating that an attempt to update a record failed.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="$XFA_onContinue" />
+			<string name="status" scope="attributes" comments="'' if save was successful, 'locked' if the the record could not be unlocked, 'conflict' if there was a timestamp conflict" />
+		</in>
+		<passthrough>
+			<string name="bst" scope="attributes" optional="yes" comments="batch start index from batch link" />
+			<string name="nm" scope="attributes" optional="yes" condition="if name link is clicked" comments="the URL encoded search text" />
+		</passthrough>
+	</io>
+</fusedoc>
+*/
+
+$breadcrumbs->write
+
+case of
+	:($attributes{"status"} = "locked")
+		$err := "Someone else is currently editing that record. Please try again later."
+
+	:($attributes{"status"} = "conflict")
+		$err := "Someone else modified that record after you started editing it. Please try again."
+
+	else
+		$err := "An unexpected error occurred [{0}]. Please try again." %% ($attributes{"status"})
+end case
+
+$query := a4d.web.collectionItemsToQuery($attributes; "bst;nm")
+%>
+
+<div id="content">
+
+  <h1>We're sorry...</h1>
+
+  <p><%=$err%></p>
+
+  <p><a href="<%=fusebox.makeURL($XFA_onContinue; $query)%>">Continue</a></p>
+
+</div>

@@ -1,0 +1,25 @@
+<% /*
+<fusedoc fuse="qry_menuSelect.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I select all vendors for use with an option menu.
+	</responsibilities>
+	<io>
+		<out>
+			<RowSet name="$qryVendors">
+				<number name="id" />
+				<string name="name" />
+			</RowSet>
+		</out>
+	</io>
+</fusedoc>
+*/
+
+all records([vendors])
+order by([vendors]; [vendors]name)
+
+$map := """
+id:	  [vendors]id;
+name: [vendors]name"""
+
+$qryVendors := RowSet.newFromSelection(->[vendors]; $map)
+%>

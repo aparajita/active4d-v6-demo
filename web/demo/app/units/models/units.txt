@@ -1,0 +1,30 @@
+id:Longint	name:string(31)
+0	(none)
+10	#
+12	#10 can
+29	bag
+82	batch
+28	box
+18	bunch
+47	cake
+26	can
+9	case
+5	cup
+71	doz
+2	fl oz
+17	g
+8	gal
+25	garnish
+46	handful
+13	kg
+3	lb
+14	liter
+15	ml
+1	oz wt
+27	pan
+48	piece
+24	portion
+4	qt
+19	slice
+7	Tbs
+6	tsp

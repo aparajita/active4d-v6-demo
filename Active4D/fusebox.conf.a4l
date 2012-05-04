@@ -1,0 +1,17 @@
+/*
+	fusebox.conf.a4l
+
+	Copyright (c) Aparajita Fishman, All Rights Reserved
+*/
+
+
+library "fusebox.conf"
+
+
+// If you want to use something other than "fuseaction" in your URLs,
+// change the value of this define.
+
+define(fuseaction; "action")
+
+
+end library

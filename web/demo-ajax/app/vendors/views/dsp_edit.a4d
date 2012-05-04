@@ -1,0 +1,97 @@
+<% /*
+<fusedoc fuse="dsp_edit.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I show a form for editing a vendor.
+	</responsibilities>
+	<io>
+		<in>
+			<RowSet name="$qryVendor">
+				<number name="id" />
+				<string name="name" />
+				<string name="phone" />
+				<string name="comments" />
+				<string name="timestamp" />
+			</RowSet>
+			<string name="$XFA_onSubmit" />
+		</in>
+		<out>
+			<string name="f_name" scope="form" />
+			<string name="f_phone" scope="form" />
+			<string name="f_comments" scope="form" />
+			<string name="timestamp" scope="form" />
+			<string name="submitAction" scope="form" comments="update|cancel|delete" />
+		</out>
+		<passthrough>
+			<string name="id" scope="attributes" comments="vendor id" />
+			<string name="bst" scope="attributes" optional="yes" comments="batch start index from batch link" />
+			<string name="nm" scope="attributes" optional="yes" condition="if vendor name link is clicked" comments="the URL encoded search text" />
+		</passthrough>
+	</io>
+</fusedoc>
+*/
+
+$breadcrumbs->write
+$qryVendor->first
+$row := $qryVendor->getRow
+%>
+
+<script type="text/javascript">
+	function submitForm() {
+		if (document.form.submitAction.value == 'delete') {
+			return (confirm('Are you sure you want to delete this record?'));
+		}
+
+		return true;
+	}
+</script>
+
+<div id="content">
+
+  <div id="demo-form">
+    <form name="form" action="<%=fusebox.makeURL($XFA_onSubmit)%>" method="post" onsubmit="return submitForm();">
+      <%
+	  	a4d.web.embedCollectionItems($attributes; "id;bst;nm")
+		a4d.web.hideField("timestamp"; $row{"timestamp"})
+		a4d.web.hideField("submitAction"; "")
+	  %>
+
+      <table>
+        <tr>
+	      <td class="title" colspan="2">Vendor Info</td>
+	    </tr>
+	    <tr>
+	      <td class="label">Name</td>
+	      <td><input name="f_name" id="f_name" value="<%=$row{"name"}%>" type="text" size="40"></td>
+	    </tr>
+	    <tr>
+	      <td class="label">Phone</td>
+	      <td><input name="f_phone" value="<%=$row{"phone"}%>" type="text" size="40"></td>
+	    </tr>
+	    <tr>
+	      <td class="label top">Comments</td>
+	      <td><textarea name="f_comments" rows="7" cols="50"><%=$row{"comments"}%></textarea></td>
+	    </tr>
+      </table>
+
+      <br>
+
+      <input name="b_save" type="submit" value="Save" onclick="this.form.submitAction.value = 'update*'">
+	  &nbsp;
+      <input name="b_cancel" type="submit" value="Cancel" onclick="this.form.submitAction.value = 'cancel'">
+
+      <% if ($attributes{"id"} # "-1")%>
+      <input name="b_delete" type="submit" value="Delete" style="margin-left: 70px" onclick="this.form.submitAction.value = 'delete'">
+      <% end if %>
+
+    </form>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+	setTimeout(function() {
+		var el = document.getElementById('f_name');
+		el.focus();
+		el.select();
+	}, 250);
+</script>

@@ -1,0 +1,20 @@
+# No log files
+Logs/
+
+# Most of the standard libs are symlinks, ignore them
+*.a4l
+
+# But the following are modified and tracked in the demo
+!Active4D.a4l
+!_active4d.a4l
+!demo.a4l
+!fusebox.conf.a4l
+
+# ExtensionMap.ini is not modified
+ExtensionMap.ini
+
+# ext is standard
+ext/
+
+Preferences/
+*.journal

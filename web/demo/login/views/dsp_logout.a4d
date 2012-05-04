@@ -1,0 +1,23 @@
+<% /*
+<fusedoc fuse="dsp_logout.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I tell the user of a successful logout and offer a chance to login again.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="$XFA_onLogin" />
+		</in>
+	</io>	
+</fusedoc>
+*/ 
+
+fusebox.head.setTitle(fusebox.head.getTitle + " - Logged Out")
+%>
+
+<div id="content">
+
+  <h1>Logged out</h1>
+  
+  <p>You have now logged out of the application. If you would like, feel free to <a href="<%=fusebox.makeURL($XFA_onLogin)%>">login again</a>.</p>
+
+</div>

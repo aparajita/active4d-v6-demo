@@ -1,0 +1,16 @@
+<%
+/*
+	__init__.a4d
+	
+	Circuit initialization script for the uploads circuit.
+*/
+
+// We need an uploads directory for the uploads
+
+$path := join paths(directory of(current path); "files")
+
+if (not(directory exists($path)))
+	create folder($path)
+end if
+%>
+

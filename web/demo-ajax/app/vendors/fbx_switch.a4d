@@ -1,0 +1,37 @@
+<% /*
+<fusedoc fuse="fbx_switch.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I am the switch statement that handles fuseactions in this circuit.
+		I delegate to the fuses responsible for handling a given fuseaction.
+	</responsibilities>
+</fusedoc>
+*/
+
+if (not(session has("user.id")))
+	$result := "timeout"
+	include("../../controllers/act_makeJsonResult.a4d")
+	return
+end if
+
+$fuseaction := $fusebox{"fuseaction"}
+
+case of
+	:($fuseaction = "list")
+		include("views/dsp_list.a4d")
+
+	:($fuseaction = "selectForGrid")
+		include("models/qry_selectMany.a4d")
+		include("../../controllers/act_makeJsonResult.a4d")
+
+	:($fuseaction = "load")
+		include("models/qry_selectOne.a4d")
+		include("../../controllers/act_makeJsonResult.a4d")
+
+	:($fuseaction =~ "/^(update|delete)$/")
+		include("models/qry_update.a4d")
+		include("../../controllers/act_makeJsonResult.a4d")
+
+	else
+		$fusebox->invalidAction
+end case
+%>

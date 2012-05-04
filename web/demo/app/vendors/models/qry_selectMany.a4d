@@ -1,0 +1,42 @@
+<% /*
+<fusedoc fuse="qry_selectMany.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I select either all vendors or the vendors whose name matches a string.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="nm" optional="yes" comments="vendor name to match, empty for all" />
+		</in>
+		<out>
+			<RowSet name="$qryVendors">
+				<number name="id" />
+				<string name="name" />
+				<string name="phone" />
+				<number name="num_products" />
+			</RowSet>
+			<Batch name="$batch" />
+		</out>
+	</io>
+</fusedoc>
+*/
+
+if ($attributes{"nm"} # "")
+	query([vendors]; [vendors]name = replace string($attributes{"nm"}; "*"; "@"))
+else
+	all records([vendors])
+end if
+
+order by([vendors]; [vendors]name)
+
+$map := """
+id:				[vendors]id;
+name:			[vendors]name;
+phone:			[vendors]phone;
+num_products:	`records in selection([ingredients])`"""
+
+// Use a row callback to get the related [ingredients] records
+$callback := "relate many([vendors]id)"
+
+$batch := Batch.new(records in selection([vendors]); $attributes)
+$qryVendors := RowSet.newFromSelection(->[vendors]; $map; $batch; $callback)
+%>

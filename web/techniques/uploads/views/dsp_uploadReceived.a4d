@@ -1,0 +1,75 @@
+<% /*
+<fusedoc fuse="dsp_uploadReceived.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I show information about uploaded files.
+	</responsibilities>
+	<io>
+		<in>
+			<BLOB name="A4D_Upload" comments="The blob that receives the uploaded file" />
+			<string name="$XFA_onTryAgain" />
+			<string name="f_info" scope="attributes" />
+			<string name="$uploadPath" comments="where the upload was saved, empty if it was not saved" />
+		</in>
+	</io>
+</fusedoc>
+*/
+
+fusebox.head.setTitle(fusebox.head.getTitle + "/Uploads")
+fusebox.head.addDumpStyles
+%>
+
+<div id="content">
+
+  <h1>File Upload Results</h1>
+
+  <div class="a4d-debug">
+  <table>
+    <tr>
+	  <td class="title" colspan="2">Uploads</td>
+	</tr>
+    <tr>
+	  <th>Info</th>
+	  <th>Value</th>
+    </tr>
+    <tr>
+	  <td class="label">Number of uploads</td>
+	  <td><%=count uploads%></td>
+    </tr>
+    <tr>
+	  <td class="label">Remote filename</td>
+	  <td><%=cell(get upload remote filename("A4D_Upload"))%></td>
+    </tr>
+    <tr>
+	  <td class="label">Upload extension</td>
+	  <td><%=cell(get upload extension("A4D_Upload"))%></td>
+    </tr>
+    <tr>
+	  <td class="label">Content type</td>
+	  <td><%=cell(get upload content type("A4D_Upload"))%></td>
+    </tr>
+    <tr>
+	  <td class="label">Content encoding</td>
+	  <td><%=cell(get upload encoding("A4D_Upload"))%></td>
+    </tr>
+    <tr>
+	  <td class="label">Upload size</td>
+	  <td><%write(get upload size("A4D_Upload");"###,###,##0")%> bytes</td>
+    </tr>
+    <tr>
+	  <td class="label">Additional info</td>
+	  <td><%=$attributes{"f_info"}%></td>
+    </tr>
+  </table>
+  </div>
+
+  <div style="margin-top:1em">
+  <%
+  	if ($uploadPath # "")
+		writep('The upload was saved to $uploadPath')
+	end if
+  %>
+
+  <p><a href="<%=fusebox.makeURL($XFA_onTryAgain)%>">Try again</a></p>
+  </div>
+
+</div>

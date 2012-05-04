@@ -1,0 +1,26 @@
+<% /*
+<fusedoc fuse="dsp_list.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I am a placeholder for an Ext grid listing of the vendors.
+	</responsibilities>
+</fusedoc>
+*/ 
+%>
+<script src="/js/ext/ux/uxAparajita.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/demo-ajax/demo.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/demo-ajax/vendors.js" type="text/javascript" charset="utf-8"></script>
+
+<div id="content">
+	
+	<p>This is an example of using an <a href="http://extjs.com/products/extjs/">Ext JS</a> grid with Active4D. 
+		Take a look at <a href="/js/demo-ajax/vendors.js">vendors.js</a> to see how the grid is setup.
+		The code that retrieves the grid data is in /web/demo-ajax/app/vendors/models/qry_selectMany.a4d.
+		It only takes 2 lines of code to format a RowSet as JSON for use with an Ext grid!
+	</p>
+	
+	<p>The "Name" and "# Products" columns are sortable, try clicking on the column header.
+		You can also double-click a row to edit it.
+	</p>
+		
+	<div id="grid"></div>
+</div>

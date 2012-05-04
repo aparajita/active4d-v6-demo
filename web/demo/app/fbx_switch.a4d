@@ -1,0 +1,67 @@
+<% /*
+<fusedoc fuse="fbx_switch.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I am the switch statement that handles fuseactions in this circuit.
+		I delegate to the fuses responsible for handling a given fuseaction.
+	</responsibilities>
+	<io>
+		<out>
+			<string name="$circuitDir" comments="name of the target circuit directory" />
+		</out>
+	</io>
+</fusedoc>
+
+
+This switch is not typical, as it is handling the shared logic for
+all of its child circuits.
+*/
+
+$fuseaction := $fusebox{"fuseaction"}
+$circuit := $fusebox{"circuit"}
+$circuitDir := filename of(directory of($fusebox{"currentPath"}; *))
+
+case of
+	:($fuseaction = "main")
+		$XFA_onListVendors := "vendors.list"
+		$XFA_onAddVendor   := "vendors.edit"
+		$XFA_onListIngredients := "ingredients.list"
+		$XFA_onAddIngredient   := "ingredients.edit"
+		$XFA_onListUnits := "units.list"
+		include("views/dsp_dashboard.a4d")
+
+	:($fuseaction = "timeout")
+		$XFA_onLogin := "login.main"
+		include("views/dsp_timeout.a4d")
+
+	:($fuseaction = "list")
+		include(join paths($circuitDir; "models/qry_selectMany.a4d"))
+
+		$XFA_onAdd    := '$circuit.edit'
+		$XFA_onEdit   := '$circuit.edit'
+		$XFA_onSearch := '$circuit.search'
+		include(join paths($circuitDir; "views/dsp_list.a4d"))
+
+	:($fuseaction = "edit")
+		include(join paths($circuitDir; "models/qry_selectOne.a4d"))
+
+		$XFA_onSubmit := '$circuit.update'
+		include(join paths($circuitDir; "views/dsp_edit.a4d"))
+
+	:($fuseaction = "update")
+		$XFA_onUpdateSuccess := '$circuit.list'
+		$XFA_onCancel := $XFA_onUpdateSuccess
+		$XFA_onUpdateFailure := '$circuit.updateFailure'
+		include(join paths($circuitDir; "controllers/act_processUpdate.a4d"))
+
+	:($fuseaction = "updateFailure")
+		$XFA_onContinue := '$circuit.list'
+		include("views/dsp_updateFailure.a4d")
+
+	:($fuseaction = "search")
+		$XFA_onAfterSearch := '$circuit.list'
+		include("controllers/act_processSearch.a4d")
+
+	else
+		$fusebox->invalidAction
+end case
+%>

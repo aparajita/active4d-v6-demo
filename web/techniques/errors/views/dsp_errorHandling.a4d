@@ -1,0 +1,72 @@
+<% /*
+<fusedoc fuse="dsp_errorHandling.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I talk about error handling and let the user see internal/custom error pages.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="$XFA_onDefaultError" />
+			<string name="$XFA_onCustomError" />
+		</in>
+	</io>
+</fusedoc>
+*/
+
+fusebox.head.setTitle(fusebox.head.getTitle + "/Error Handling")
+%>
+
+<div id="content">
+
+  <h1>Execution Error Handling</h1>
+
+  <p>When an execution error occurs in Active4D, by default you will see a page
+  that shows the stack trace, the offending line, and a description of the error.</p>
+
+  <p>This is wonderful during development, but you don't want users on a production site
+  to see this kind of error. Active4D allows you to set a custom error page which will
+  be executed when an execution error occurs. You can set the error page globally in
+  Active4D.ini, or per request by calling <strong>set error page</strong>.</p>
+
+  <p>Click on the links below to see the two types of error page in action.</p>
+
+  <p><a href="<%=fusebox.makeURL($XFA_onDefaultError)%>">Show the default error page</a></p>
+
+  <p><a href="<%=fusebox.makeURL($XFA_onCustomError)%>">Show the custom error page</a></p>
+
+
+  <h1 style="margin-top:3em">User Error Handling</h1>
+
+  <p>When you use the <strong>throw</strong> command, an execution error is generated.
+    Within a custom error handler, you can use the <strong>get throw message</strong>
+    and <strong>get throw code</strong> commands to retrieve the message and error code
+    passed to the <strong>throw</strong> command.</p>
+
+  <p>The links below show what happens when you <strong>throw</strong> with no error handler,
+    how to detect fusebox errors such as bad fuseactions, and how to create and trap your own
+    error codes.</p>
+
+  <p><a href="<%=fusebox.makeURL($XFA_onDefaultUserError)%>">Show the default user error page</a></p>
+
+  <p><a href="<%=fusebox.makeURL($XFA_onCustomUserError)%>">Show the custom user error page</a></p>
+
+  <p><a href="<%=fusebox.makeURL($XFA_onMissingCircuitError)%>">Show the missing circuit error page</a></p>
+
+  <p><a href="<%=fusebox.makeURL($XFA_onMissingActionError)%>">Show the missing action error page</a></p>
+
+
+  <h1 style="margin-top:3em">HTTP Error Handling</h1>
+
+  <p>When an HTTP error occurs in Active4D (such as 404 Not Found), by default you will see a page
+  that shows the error status and a description of the error.</p>
+
+  <p>This is wonderful during development, but you don't want users on a production site
+  to see this kind of error. Active4D allows you to set a custom error page which will
+  be executed when an HTTP error occurs. You can set the HTTP error page globally in
+  Active4D.ini or by calling <strong>set http error page</strong>.</p>
+
+  <p>Click on the links below to see the two types of HTTP error page in action.</p>
+
+  <p><a href="<%=fusebox.makeURL($XFA_onDefaultHttpError)%>">Show the default HTTP error page</a></p>
+
+  <p><a href="<%=fusebox.makeURL($XFA_onCustomHttpError)%>">Show the custom HTTP error page</a></p>
+</div>

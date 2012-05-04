@@ -1,0 +1,38 @@
+<% /*
+<fusedoc fuse="qry_selectOne.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I select a single vendor given an id.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="id" scope="attributes" />
+		</in>
+		<out>
+			<JSON>
+				<string name="id" />
+				<string name="name" />
+				<string name="phone" />
+				<string name="comments" />
+				<string name="timestamp" />
+			</JSON>
+			<string name="$result" comments="used by act_makeJsonResult.a4d" />
+		</out>
+	</io>
+</fusedoc>
+*/
+
+// The id passed in may be -1, in which case we will end up
+// with an empty RowSet.
+query([vendors]; [vendors]id = num($attributes{"id"}))
+
+$map := new collection
+$map{"id"} := ->[vendors]id
+$map{"name"} := ->[vendors]name
+$map{"phone"} := ->[vendors]phone
+$map{"comments"} := ->[vendors]comments
+$map{"timestamp"} := ->[vendors]timestamp
+
+$json := a4d.json.new
+$json->addSelection(->[vendors]; ""; "data"; $map; -1)
+$result := "success"
+%>

@@ -1,0 +1,37 @@
+<% /*
+<fusedoc fuse="qry_selectMany.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I select all units. The data is retrieved from a CSV file.
+	</responsibilities>
+	<io>
+		<out>
+			<RowSet name="$qryUnits">
+				<number name="id" />
+				<string name="name" />
+			</RowSet>
+		</out>
+	</io>
+</fusedoc>
+*/
+
+// See if the persistent RowSet has been created yet
+$qryUnits := RowSet.persistent("units")
+
+if ($qryUnits # 0)
+	// If it has been created, see if it has timed out
+	if ($qryUnits->timedOut)
+		$qryUnits := 0
+	end if
+end if
+
+if ($qryUnits = 0)
+	// We either haven't created the persistent RowSet or it timed out.
+	// Create a new persistent RowSet with a timeout of 60 minutes.
+	// The data comes from a standard export file created by 4D, with the
+	// only change being to add the column type to the column names.
+	
+	$path := join paths(directory of(current path); "units.txt")
+	$qryUnits := RowSet.newFromFile($path; "\n"; "\t"; -1; "units"; 60)
+end if
+%>
+

@@ -1,0 +1,5 @@
+<%
+$c := new collection("foo"; "bar")
+$d := $c
+write(is a collection($c))
+%>

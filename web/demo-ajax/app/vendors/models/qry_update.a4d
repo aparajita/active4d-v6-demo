@@ -1,0 +1,65 @@
+<% /*
+<fusedoc fuse="qry_save.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I create/update/delete a vendor record depending on the user's action in the edit form.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="submitAction" scope="attributes" comments="update|delete|cancel" />
+			<string name="timestamp" scope="attributes" />
+			<boolean name="in-cud" scope="request" comments="true if a4d.utils.cud has not yet been called"/>
+		</in>
+		<passthrough>
+			<string name="id" scope="attributes" />
+			<string name="f_name" scope="attributes" />
+			<string name="f_phone" scope="attributes" />
+			<string name="f_comments" scope="attributes" />
+		</passthrough>
+		<out>
+			<string name="$cudResult" comments="during processing phase of a4d.utils.cud" />
+			<string name="$result" comments="result of a4d.utils.cud" />
+		</out>
+	</io>
+</fusedoc>
+*/
+
+// The _request{"in-cud"} flag is set by the generic update controller to false when this script
+// is first called. We then set it to true so we can use this same script as the a4d.utils.cud
+// processor script. When cud includes this script, _request{"in-cud"} will be true.
+
+if (not(_request{"in-cud"}))
+	_request{"in-cud"} := true
+	$action := $fusebox{"fuseaction"}
+	
+	if ($action = "update")
+		// The demo uses an id of -1 to indicate a new record
+		$action := choose(num($attributes{"id"}) = -1; "create"; "update")
+	end if
+	
+	// Let a4d.utils.cud do its magic. We want to do timestamp checking, so pass those values.
+	$result := a4d.utils.cud($action; ->[vendors]; current path(*); $attributes; ->[vendors]timestamp; $attributes{"timestamp"})
+else
+	case of
+		:($cudPhase = "query")
+			// cud wants to locate the record to operate on
+			query([vendors]; [vendors]id = num($attributes{"id"}))
+
+		:($cudPhase = "update")
+			// A record is being created or updated
+				[vendors]name := $attributes{"name"}
+				[vendors]phone := $attributes{"phone"}
+				[vendors]comments := $attributes{"comments"}
+		
+		:($cudPhase = "delete")
+			// A vendor is about to be deleted. Make sure the related ingredients have the vendor
+			// set to none.
+			query([ingredients]; [ingredients]vendor_id = [vendors]id)
+			
+			if (a4d.utils.applyToSelection(->[ingredients]; "[ingredients]vendor_id := 0"))
+				$cudResult := "success"
+			else
+				$cudResult := "locked"
+			end if
+	end case
+end if
+%>

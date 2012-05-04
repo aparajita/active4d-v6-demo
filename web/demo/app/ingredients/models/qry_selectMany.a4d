@@ -1,0 +1,70 @@
+<% /*
+<fusedoc fuse="qry_selectMany.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I select ingredients whose name matches a string or who have a given vendor id.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="nm" optional="yes" comments="ingredient name to match, empty for all" />
+		</in>
+		<out>
+			<RowSet name="$qryIngredients">
+				<number name="id" />
+				<string name="name" />
+				<number name="vendor_id" />
+				<string name="vendor" />
+				<number name="qty" />
+				<string name="unit" />
+				<number name="price" />
+			</RowSet>
+			<Batch name="$batch" />
+		</out>
+	</io>
+</fusedoc>
+*/
+
+if ($attributes{"nm"} # "")
+	query([ingredients]; [ingredients]name = replace string($attributes{"nm"}; "*"; "@"))
+else
+	all records([ingredients])
+end if
+
+order by([ingredients]; [ingredients]name)
+
+/*
+	The $qryIngredients RowSet needs to get the unit name. The units are being
+	kept in a persistent RowSet called "units". The assumption is that the units
+	data does not have to come from the database on every request, so to be consistent
+	we should get unit names from the units RowSet.
+	
+	The code here demonstrates the technique for doing that. First we execute the
+	query fuse to get the units RowSet. We could just use RowSet.persistent("units"),
+	but by calling the query fuse we ensure the data is regenerated if the RowSet has
+	timed out.
+	
+	We have to declare $qryUnits and $unitsRow global so they can be accessed within
+	the row and column callbacks within the RowSet.
+*/
+global($qryUnits; $unitsRow)
+include("../../units/models/qry_selectMany.a4d")
+$unitsRow := $qryUnits->getRow
+
+/*
+	The callback finds the units row with the given id, which makes that row current.
+	We can then directly access $unitsRow{"name"} to get the name.
+*/
+$callback := """global($qryUnits; $unitsRow)
+$qryUnits->findRow("id"; [ingredients]ship_unit_id)"""
+
+$map := """
+id:			[ingredients]id;
+name:		[ingredients]name;
+vendor_id:	[ingredients]vendor_id;
+vendor:		[vendors]name;
+qty:		[ingredients]ship_qty;
+unit:		`$unitsRow{"name"}`;
+price:		[ingredients]price"""
+
+$batch := Batch.newFromSelection(->[ingredients]; $attributes)
+$qryIngredients := RowSet.newFromSelection(->[ingredients]; $map; $batch; $callback)
+%>

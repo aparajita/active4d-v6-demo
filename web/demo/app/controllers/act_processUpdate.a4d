@@ -1,0 +1,51 @@
+<% /*
+<fusedoc fuse="act_processUpdate.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I am a generalized script for handling creates/updates/deletes.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="$circuitDir" comments="name of the target circuit directory" />
+			<string name="$updateSuccessHook" comments="code to execute if update is successful" />
+			<string name="$XFA_onUpdateSuccess" />
+			<string name="$XFA_onUpdateFailure" />
+			<string name="$XFA_onCancel" />
+		</in>
+		<passthrough>
+			<string name="bst" scope="attributes" optional="yes" comments="batch start index from batch link" />
+			<string name="nm" scope="attributes" optional="yes" condition="if vendor name link is clicked" comments="the URL encoded search text" />
+		</passthrough>
+	</io>	
+</fusedoc>
+*/
+
+// We want to pass on the batch start index and any search text
+$query := a4d.web.collectionItemsToQuery($attributes; "bst;nm")
+
+// If the edit form was not cancelled...
+if ($attributes{"submitAction"} # "cancel")
+	
+	// Set a flag so we can reuse the same script to call a4d.utils.cud
+	// and act as the processor for a4d.utils.cud
+	_request{"in-cud"} := false
+	
+	// Call the circuit-specific update processing script
+	include(join paths("../"; $circuitDir; "models/qry_update.a4d"))
+	
+	// If everything went ok, run the success hook
+	if ($cudResult = "success")
+		if ($updateSuccessHook # "")
+			execute($updateSuccessHook)
+		end if
+		
+		redirect(fusebox.makeURL($XFA_onUpdateSuccess; $query))
+	else
+		// Something went wrong, tell the user
+		$query := build query string($query; "status"; $cudResult)
+		redirect(fusebox.makeURL($XFA_onUpdateFailure; $query))
+	end if
+else
+	// The edit form was cancelled
+	redirect(fusebox.makeURL($XFA_onCancel; $query))
+end if
+%>

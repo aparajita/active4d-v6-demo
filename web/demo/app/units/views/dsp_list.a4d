@@ -1,0 +1,63 @@
+<% /*
+<fusedoc fuse="dsp_list.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I show a list of the units.
+	</responsibilities>
+	<io>
+		<in>
+			<RowSet name="$qryUnits">
+				<number name="id" />
+				<string name="name" />
+			</RowSet>
+			<string name="bst" scope="attributes" optional="yes" comments="batch start index" />
+		</in>
+	</io>
+</fusedoc>
+*/
+
+$breadcrumbs->write
+
+// Because the batch is persistent we can't create the batch first.
+$batch := Batch.newFromRowSet($qryUnits; $attributes)
+
+// Generate the batch links
+c_text($prev; $batches; $next)
+$needBatch := $batch->makeFuseboxLinks($prev; $batches; $next; $attributes)
+%>
+
+<div id="content">
+
+  <p><%=param text("Displaying ^1-^2 of ^3 record|3||s|"; $batch{"start"}; $batch{"end"}; $batch{"row_count"})%></p>
+
+  <div id="demo-list">
+
+    <table>
+	  <tr>
+	    <th>Name</th>
+	  </tr>
+
+	  <%
+	  	$row := $qryUnits->getRow
+		$alt := true
+
+		for ($i; $batch{"start"}; $batch{"end"})
+			$qryUnits->gotoRow($i)
+			$alt := not($alt)
+			$rowClass := choose($alt; "alt"; "")
+	  %>
+	  <tr class="<%=$rowClass%>">
+	    <td><%=$row{"name"}%></td>
+	  </tr>
+	  <%
+	  	end for
+	  %>
+	</table>
+  </div>
+
+  <% if ($needBatch) %>
+     <div id="batches">
+       Go to page:&nbsp;&nbsp;<%=$prev + $batches + $next%>
+     </div>
+  <% end if %>
+
+</div>

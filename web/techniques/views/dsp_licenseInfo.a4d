@@ -1,0 +1,25 @@
+<% /*
+<fusedoc fuse="dsp_licenseInfo.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I show the license info.
+	</responsibilities>
+</fusedoc>
+*/ 
+
+fusebox.head.setTitle(fusebox.head.getTitle + "/License Info")
+%>
+
+<div id="content">
+
+  <h1>License Info</h1>
+  
+  <p>If you ever need to remotely see information about your deployment license,
+  you only need one line of code:</p>
+  
+  <p><code>&lt;% a4d.debug.dump license info %&gt;</code></p>
+  
+  <p>And here is the result of that call on your machine:</p>
+  
+  <% a4d.debug.dump license info %>
+  
+</div>

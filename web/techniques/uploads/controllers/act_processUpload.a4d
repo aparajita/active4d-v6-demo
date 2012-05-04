@@ -1,0 +1,32 @@
+<% /*
+<fusedoc fuse="act_processUpload.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I process the upload, saving it if the user requested to do so.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="f_save" scope="attributes" comments="is 'yes' if the upload should be saved" />
+		</in>
+		<out>
+			<string name="$uploadPath" comments="where the upload was saved, empty if it was not saved" />
+		</out>
+	</io>	
+</fusedoc>
+*/
+
+c_text($filename; $uploadPath)
+$filename := get upload remote filename("A4D_Upload")
+
+case of
+  :($attributes{"f_save"} = "no")
+	  $uploadPath := ""
+	  
+  :($attributes{"f_save"} = "yes")
+	  $uploadPath := join paths($fusebox{"appPath"}; $fusebox{"currentPath"}; "files"; $filename)
+end case
+
+if ($uploadPath # "")
+  copy upload("A4D_Upload"; $uploadPath)
+end if
+%>
+

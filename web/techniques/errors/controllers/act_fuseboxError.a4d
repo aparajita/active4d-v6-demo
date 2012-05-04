@@ -1,0 +1,23 @@
+<% /*
+<fusedoc fuse="act_fuseboxError.a4d" language="Active4D" specification="2.0">
+    <responsibilities>
+        I force a fusebox error to occur.
+    </responsibilities>
+    <io>
+        <in>
+            <string name="$errorHandler" comments="url of error handler script" />
+        </in>
+    </io>
+</fusedoc>
+*/
+
+set error page($errorHandler)
+
+case of
+    :($fusebox{"fuseaction"} = "missingCircuitError")
+        $fusebox->sendFuseaction("foo.main")
+
+    :($fusebox{"fuseaction"} = "missingActionError")
+        $fusebox->sendFuseaction("root.foo")
+end case
+%>

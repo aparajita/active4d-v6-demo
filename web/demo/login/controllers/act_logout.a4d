@@ -1,0 +1,15 @@
+<% /*
+<fusedoc fuse="act_logout.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I do important things when the user logs out, such as abandoning the session.
+	</responsibilities>
+</fusedoc>
+*/
+
+// We have to delete the session items before abandoning so that other fuses 
+// within this request will know the session has been abandoned.
+
+delete session item("@")
+abandon session
+
+%>

@@ -1,0 +1,12 @@
+<%
+if (not(defined($json)))
+	$json := a4d.json.new
+end if
+
+$success := $result = "success"
+$result := slice string($result; "|"; $msg)  // A result code can be followed by a message
+$json->add("result"; $result)
+$json->add("message"; $msg)
+$json->add("success"; $success)
+$json->write
+%>

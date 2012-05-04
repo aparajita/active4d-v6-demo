@@ -1,0 +1,90 @@
+<% /*
+<fusedoc fuse="dsp_list.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I show a list of the vendors.
+	</responsibilities>
+	<io>
+		<in>
+			<RowSet name="$qryVendors">
+				<number name="id" />
+				<string name="name" />
+				<string name="phone" />
+				<number name="num_products" />
+			</RowSet>
+			<Batch name="$batch" />
+			<string name="$XFA_onEdit" />
+			<string name="$XFA_onSearch" />
+		</in>
+		<out>
+			<string name="bst" scope="attributes" optional="yes" comments="batch start index from batch link" />
+			<string name="nm" scope="attributes" optional="yes" condition="if vendor name link is clicked" comments="the URL encoded search text" />
+			<string name="id" scope="attributes" optional="yes" condition="present if vendor name link is clicked" comments="vendor id" />
+		</out>
+	</io>
+</fusedoc>
+*/
+
+$breadcrumbs->write
+
+// Make the base query string for the edit links
+$baseQuery := a4d.web.collectionItemsToQuery($attributes; "nm;bst")
+
+// Generate the batch links
+c_text($prev; $batches; $next)
+$needBatch := $batch->makeFuseboxLinks($prev; $batches; $next; $attributes; ""; "nm")
+%>
+
+<div id="content">
+
+  <% include("../../views/dsp_searchBox.a4d") %>
+  <br>
+
+  <p><%=param text("#3#There are no records that match the search criteria#Displaying ^1-^2 of ^3 record|3||s|#"; $batch{"start"}; $batch{"end"}; $batch{"row_count"})%></p>
+
+  <% if ($qryVendors->rowCount > 0) %>
+
+  <div id="demo-list">
+
+    <table>
+	  <tr>
+	    <th>Name</th>
+		<th>Phone</th>
+		<th class="right"># Products</th>
+	  </tr>
+
+	  <%
+	  	$row := $qryVendors->getRow
+		$alt := true
+
+		while ($qryVendors->next)
+			$alt := not($alt)
+			$rowClass := choose($alt; "alt"; "")
+			$query := build query string($baseQuery; "id"; $row{"id"})
+	  %>
+	  <tr class="<%=$rowClass%>">
+	    <td>
+		  <a href="<%=fusebox.makeURL($XFA_onEdit; $query)%>"
+		     title="Click to edit this vendor"><%=mac to html($row{"name"}; *)%></a>
+		</td>
+		<td><%=cell($row{"phone"})%></td>
+		<td class="right"><%=$row{"num_products"}%></td>
+	  </tr>
+	  <%
+	  	end while
+	  %>
+	</table>
+  </div>
+
+  <% if ($needBatch) %>
+     <div id="batches">
+       Go to page:&nbsp;&nbsp;<%=$prev + $batches + $next%>
+     </div>
+  <% end if // $needBatch
+     end if // $qryVendors->rowCount > 0
+  %>
+
+  <div id="add-button">
+    <input type="button" value="Add Vendor" onclick="document.location='<%=fusebox.makeURL($XFA_onAdd; build query string($baseQuery; "id"; -1))%>'">
+  </div>
+
+</div>

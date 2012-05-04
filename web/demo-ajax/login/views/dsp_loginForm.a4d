@@ -1,0 +1,11 @@
+<% /*
+<fusedoc fuse="dsp_loginForm.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I load the Ext login form window.
+	</responsibilities>
+</fusedoc>
+*/ 
+
+fusebox.head.setTitle(fusebox.head.getTitle + " - Login")
+%>
+<script src="/js/demo-ajax/login.js" type="text/javascript" charset="utf-8"></script>

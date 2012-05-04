@@ -1,0 +1,69 @@
+<% /*
+<fusedoc fuse="act_calcImageStuff.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I build the code to execute for the different methods of fetching images.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="f_source" scope="attributes" />
+			<string name="size" scope="attributes" optional="true" />
+		</in>
+		<out>
+			<string name="$code"  comments="The code executed to load the image" />
+		</out>
+	</io>
+</fusedoc>
+*/
+
+$source := $attributes{"f_source"}
+
+if ($source = "") | ($source = "-")
+	$query := ""
+	$code  := ""
+	return
+end if
+
+case of
+	:($source = "value")
+		$code := """
+$query := build query string(""; "img_field"; "[images]image"; \\\\
+                                 "qry_field"; "id"; \\\\
+                                 "qry_value"; 101;  \\\\
+                                 "format"; "png" """
+
+
+	:($source = "recnum")
+		$code := """
+$query := build query string(""; "img_field"; "[images]image"; \\\\
+                                 "recnum"; 1"""
+
+
+	:($source = "lib-id")
+		$code := """
+$query := build query string(""; "id"; 10040; "format"; "png" """
+
+
+	:($source = "lib-name")
+		$code := """
+$query := build query string(""; "id"; "caution-small"; "format"; "png" """
+
+
+	:($source = "file")
+		$code := """
+$query := build query string(""; "file"; "../web_static/images/add.gif" """
+
+
+	:($source = "method")
+		$code := """
+$query := build query string(""; "method"; "image.multiplyImage"; \\\\
+                                 "param"; "valid-html401-blue.png|3" """
+
+end case
+
+if ($attributes{"size"} # "")
+	$code += """;  \\\\
+                                 "size"; -.5)\n"""
+else
+	$code += ")\n"
+end if
+

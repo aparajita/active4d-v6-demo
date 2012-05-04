@@ -1,0 +1,26 @@
+<% /*
+<fusedoc fuse="fbx_switch.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I am the switch statement that handles fuseactions in this circuit.
+		I delegate to the fuses responsible for handling a given fuseaction.
+	</responsibilities>
+</fusedoc>
+*/
+
+$fuseaction := $fusebox{"fuseaction"}
+$circuit := $fusebox{"circuit"}
+
+case of
+	:($fuseaction = "main")
+		$XFA_onSubmit := '$fusebox{"circuit"}.processUpload'
+		include("views/dsp_uploads.a4d")
+
+	:($fuseaction = "processUpload")
+		$XFA_onTryAgain := '$fusebox{"circuit"}.main'
+		include("controllers/act_processUpload.a4d")
+		include("views/dsp_uploadReceived.a4d")
+
+	else
+		$fusebox->invalidAction
+end case
+%>

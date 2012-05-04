@@ -1,0 +1,19 @@
+<% /*
+<fusedoc fuse="fbx_switch.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I am the switch statement that handles fuseactions in this circuit.
+		I delegate to the fuses responsible for handling a given fuseaction.
+	</responsibilities>
+</fusedoc>
+*/
+
+$fuseaction := $fusebox{"fuseaction"}
+
+case of
+	:($fuseaction =~ "/^(list|edit|update|updateFailure|search)$/")
+		include("../fbx_switch.a4d")
+
+    else
+    	$fusebox->invalidAction
+end case
+%>

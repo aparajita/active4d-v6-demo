@@ -1,0 +1,50 @@
+<% /*
+<fusedoc fuse="dsp_execute.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I display a form in which Active4D code can be entered and executed.
+		The output of the execution is displayed at the bottom.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="f_code" comments="The code that was entered" />
+			<string name="$XFA_onSubmit" comments="Go here to submit the form" />
+		</in>
+		<out>
+			<string name="f_code" comments="The code to execute" />
+		</out>
+	</io>
+</fusedoc>
+*/
+
+fusebox.head.setTitle(fusebox.head.getTitle + "/Executing Code")
+%>
+
+<div id="content">
+
+  <h1>Executing Code</h1>
+
+  <p>With the Active4D <strong>execute</strong> command you can execute a block of text.
+  Unlike 4D's <strong>EXECUTE</strong> command, which is limited to one line of code,
+  in Active4D you can execute as many lines of code as you want, with no constraints on
+  the use of control structures, local variables, etc.</p>
+
+  <p>Give it a try! Enter some code in the field below and then click <strong>Execute</strong>.
+  The results will be displayed at the bottom of the page.</p>
+
+  <form action="<%=fusebox.makeURL($XFA_onSubmit)%>" method="post">
+    <textarea name="f_code" class="code" cols="70" rows="10"><%=get form variable("f_code")%></textarea>
+	<br>
+    <input type="submit" name="f_execute" value="Execute">
+  </form>
+
+  <% if (form variables has("f_code")) %>
+
+  <div class="hr"></div>
+
+  <div id="execute-results">
+  <% execute(get form variable("f_code")) %>
+  </div>
+
+  <% end if %>
+
+</div>

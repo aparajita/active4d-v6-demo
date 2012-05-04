@@ -1,0 +1,23 @@
+<% /*
+<fusedoc fuse="fbx_settings.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I set up the enviroment settings for this circuit. If this settings file is being inherited, then you can set a variable outright to override a value set in a parent circuit or use if(undefined(...)) to accept a value set by a parent circuit.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="user.id" scope="session" comments="if not present, user is not logged in" />
+		</in>
+	</io>
+</fusedoc>
+*/
+
+// Make sure the user is logged in
+if (not(session has("user.id")))
+	if ($fusebox{"fuseaction"} # "timeout")
+		redirect(fusebox.makeURL("app.timeout"))
+	end if
+end if
+
+$breadcrumbs := Breadcrumbs.fuseboxNew("Home"; "app.main")
+fusebox.head.addCSS($fusebox; "/css/app.css")
+%>

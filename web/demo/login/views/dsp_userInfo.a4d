@@ -1,0 +1,27 @@
+<% /*
+<fusedoc fuse="dsp_userInfo.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I show the username and a logout button.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="$XFA_onLogout" />
+			<string name="user.name" scope="session" />
+		</in>
+	</io>	
+</fusedoc>
+*/ %>
+
+  <!-- HTML put into the session after successful login -->
+  
+  <div id="login-info">
+    <table>
+	  <tr>
+  	    <td id="username"><%=session{"user.name"}%></td>
+	    <td id="logout"><a href="<%=fusebox.makeURL($XFA_onLogout)%>">Logout</a></td>
+	  </tr>
+	</table>
+  </div>
+  
+  <!-- end session login HTML -->
+

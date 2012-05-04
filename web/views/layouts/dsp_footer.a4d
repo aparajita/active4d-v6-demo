@@ -1,0 +1,13 @@
+<div id="footer">
+
+  <div class="standards"><a href="http://jigsaw.w3.org/css-validator/check/referer" title="This Active4D site uses valid CSS"><img src="/images/valid-css2-blue.png" alt="W3C - CSS" /></a></div>
+
+  <div class="standards"><a href="http://validator.w3.org/check/referer" title="This Active4D site is valid HTML"><img src="/images/valid-html401-blue.png" alt="W3C - XHTML"></a></div>
+
+  <div id="footer_copyright">
+	Copyright &copy; 2001-<%=year of(current date)%> Aparajita Fishman<br>
+	<%=get version%>
+  </div>
+
+</div>
+

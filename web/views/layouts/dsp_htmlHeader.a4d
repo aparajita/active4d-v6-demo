@@ -1,0 +1,22 @@
+<% /*
+<fusedoc fuse="dsp_header.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I display a header for an HTML 4.01/5 page.
+	</responsibilities>
+</fusedoc>
+*/ %>
+<!DOCTYPE html>
+<html>
+<head>
+
+<!-- Put custom static header stuff here -->
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+
+<!-- End custom static header stuff -->
+
+<% fusebox.head.write %>
+</head>
+<body>
+

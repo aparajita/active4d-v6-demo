@@ -1,0 +1,129 @@
+<% /*
+<fusedoc fuse="dsp_timestamps.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I display gobs of timestamp examples.
+	</responsibilities>
+</fusedoc>
+*/
+
+fusebox.head.setTitle(fusebox.head.getTitle + "/Timestamps")
+fusebox.head.addDumpStyles
+%>
+
+<div id="content">
+
+  <h1>Timestamps</h1>
+
+  <p>Active4D provides a full suite of commands for working
+    with <b>timestamps</b>, which are special alpha values that encode
+    both a date and a time (down to the millisecond!) in a format that
+    can easily be sorted.</p>
+
+  <p>For ideas on how to use timestamps, see the Active4D
+    Reference manual. </p>
+
+  <div class="a4d-debug">
+  <table>
+    <tr>
+	  <td class="title" colspan="3">Timestamp examples</td>
+	</tr>
+    <tr>
+	  <th>Action</th>
+	  <th>Expression</th>
+	  <th>Result</th>
+    </tr>
+    <tr>
+	  <td class="label">Get current date/time as timestamp</td>
+	  <td>timestamp</td>
+	  <td><%=timestamp%></td>
+    </tr>
+    <tr>
+	  <td class="label">Get a specific date/time as a timestamp</td>
+	  <td>timestamp(current date +1 ; current time)</td>
+	  <td><%=timestamp(current date + 1; current time)%></td>
+    </tr>
+    <tr>
+	  <td class="label">Get a specific date/time as a timestamp</td>
+	  <td>timestamp(2001; 4; 13; 7; 27; 31; 47)</td>
+	  <td><%=timestamp(2001; 4; 13; 7; 27; 31; 47)%></td>
+    </tr>
+    <tr>
+	  <td class="label">Add 1 year to a timestamp</td>
+	  <td>add to timestamp(timestamp; 1)</td>
+	  <td><%=add to timestamp(timestamp; 1)%></td>
+    </tr>
+    <tr>
+	  <td class="label">Add 1 day to a timestamp</td>
+	  <td>add to timestamp(timestamp;0;0;1)</td>
+	  <td><%=add to timestamp(timestamp; 0; 0; 1)%></td>
+    </tr>
+    <tr>
+	  <td class="label">Subtract 30 days from a timestamp</td>
+	  <td>add to timestamp(timestamp; 0; 0; -30)</td>
+	  <td><%=add to timestamp(timestamp; 0; 0; -30)%></td>
+    </tr>
+    <tr>
+	  <td class="label">Convert a timestamp to formatted local time</td>
+	  <td>timestamp string(timestamp)</td>
+	  <td><%=timestamp string(timestamp)%></td>
+    </tr>
+    <tr>
+	  <td class="label">Get local date from a timestamp</td>
+	  <td>timestamp date(timestamp)</td>
+	  <td><%=string(timestamp date(timestamp); Abbr Month Day)%></td>
+    </tr>
+    <tr>
+	  <td class="label">Get local time from a timestamp</td>
+	  <td>timestamp time(timestamp)</td>
+	  <td><%=timestamp time(timestamp)%></td>
+    </tr>
+    <tr>
+	  <td class="label">Get local date and time from a timestamp</td>
+	  <td>get timestamp datetime(timestamp; $date; $time)</td>
+	  <td>
+	    <%
+			  get timestamp datetime(timestamp; $date; $time)
+			  write("$date={0}, $time={1}" %% (string($date; Abbr Month Day); $time))
+	    %>
+	  </td>
+    </tr>
+    <tr>
+	  <td class="label">Get local year from a timestamp</td>
+	  <td>timestamp year(timestamp)</td>
+	  <td><%=timestamp year(timestamp)%></td>
+    </tr>
+    <tr>
+	  <td class="label">Get local month from a timestamp</td>
+	  <td>timestamp month(timestamp)</td>
+	  <td><%=timestamp month(timestamp)%></td>
+    </tr>
+    <tr>
+	  <td class="label">Get local day from a timestamp</td>
+	  <td>timestamp day(timestamp)</td>
+	  <td><%=timestamp day(timestamp)%></td>
+    </tr>
+    <tr>
+	  <td class="label">Get local hour from a timestamp</td>
+	  <td>timestamp hour(timestamp)</td>
+	  <td><%=timestamp hour(timestamp)%></td>
+    </tr>
+    <tr>
+	  <td class="label">Get local minute from a timestamp</td>
+	  <td>timestamp minute(timestamp)</td>
+	  <td><%=timestamp minute(timestamp)%></td>
+    </tr>
+    <tr>
+	  <td class="label">Get seconds from a timestamp</td>
+	  <td>timestamp second(timestamp)</td>
+	  <td><%=timestamp second(timestamp)%></td>
+    </tr>
+    <tr>
+	  <td class="label">Get milliseconds from a timestamp</td>
+	  <td>timestamp millisecond(timestamp)</td>
+	  <td><%=timestamp millisecond(timestamp)%></td>
+    </tr>
+  </table>
+  </div>
+
+</div>
+

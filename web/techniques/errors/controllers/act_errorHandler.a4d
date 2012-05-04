@@ -1,0 +1,5 @@
+<%
+	// When handling errors in fusebox, we use fusebox.handleErrorInline
+	// to get error context info into $attributes.
+	$fusebox->handleErrorInline("root.handleError")
+%>

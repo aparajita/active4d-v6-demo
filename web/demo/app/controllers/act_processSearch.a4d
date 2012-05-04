@@ -1,0 +1,26 @@
+<% /*
+<fusedoc fuse="act_processSearch.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I determine what to do after a search has been performed.
+	</responsibilities>
+	<io>
+		<in>
+			<string name="$XFA_onAfterSearch" />
+			<string name="f_search" scope="attributes" comments="value to search for" />
+			<string name="b_search" scope="attributes" optional="yes" comments="present if Search button was clicked" />
+		</in>
+		<out>
+			<string name="nm" scope="attributes" optional="yes" comments="the URL encoded search text" />
+		</out>
+	</io>	
+</fusedoc>
+*/
+
+if ($attributes{"b_search"} # "")
+	$query := build query string("-p"; "nm"; $attributes{"f_search"})
+else
+	$query := ""
+end if
+
+redirect(fusebox.makeURL($XFA_onAfterSearch; $query))
+%>

@@ -1,0 +1,28 @@
+<% /*
+<fusedoc fuse="fbx_settings.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I set up the enviroment settings for this circuit. If this settings file is being inherited, then you can set a variable outright to override a value set in a parent circuit or use if(undefined(...)) to accept a value set by a parent circuit.
+	</responsibilities>
+	<io>
+		<in>
+			<Breadcrumbs name="$breadcrumbs" />
+		</in>
+	</io>
+</fusedoc>
+*/
+
+if ($fusebox{"fuseaction"} #~ "/^(update|search)$/")
+	$breadcrumbs->add("Vendors"; "vendors.list")
+
+	case of
+		:($fusebox{"fuseaction"} =~ "/^(edit|updateFailure)$/")
+			if (num($attributes{"id"}) < 0)
+				$breadcrumbs->add("Add vendor")
+			else
+				$breadcrumbs->add("Edit vendor")
+			end if
+	end case
+
+	fusebox.head.setTitle(fusebox.head.getTitle + " - Vendors")
+end if
+%>

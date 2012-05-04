@@ -1,0 +1,33 @@
+<% /*
+<fusedoc fuse="dsp_requestInfo.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I show how to dump the request info.
+	</responsibilities>
+</fusedoc>
+*/ 
+
+fusebox.head.setTitle(fusebox.head.getTitle + "/Request Info")
+%>
+
+<div id="content">
+
+  <h1>Request Info</h1>
+
+  <p>Active4D provides easy to use commands for accessing 
+    the most common request information. For example, to get the hostname used
+	in the request (including port), you would use this:</p>
+	
+  <p><code>$host := request info{&quot;host&quot;}</code></p>
+  
+  <p>This retrieves the &quot;Host&quot; header. However, there are times when you need 
+  to see all of the request headers for debugging purposes. To do so you need just
+  one line of code:</p>
+  
+  <p><code>&lt;% a4d.debug.dump request info %&gt;</code></p>
+  
+  <p>Here is the result of the above code on this page:</p>
+  
+  <% a4d.debug.dump request info %>
+  
+</div>
+

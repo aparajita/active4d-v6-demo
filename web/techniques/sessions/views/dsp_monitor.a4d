@@ -1,0 +1,23 @@
+<% /*
+<fusedoc fuse="dsp_monitor.a4d" language="Active4D" specification="2.0">
+	<responsibilities>
+		I display an auto-refreshing display of session stats.
+	</responsibilities>
+</fusedoc>
+*/ 
+
+fusebox.head.setTitle(fusebox.head.getTitle + "/Session Monitor")
+fusebox.head.addMetaTag($fusebox; "http-equiv=\"refresh\" content=\"30\"")
+%>
+
+<div id="content">
+
+  <h1>Session Monitor</h1>
+  
+  <p>Here is the list of all sessions currently active on your server. The list is
+  automatically refreshed every 30 seconds.</p>
+  
+  <% a4d.debug.dump session stats %>
+  
+</div>
+
