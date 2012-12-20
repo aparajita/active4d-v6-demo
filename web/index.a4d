@@ -1,6 +1,4 @@
 <%
-	// $Id: index.a4d 853 2008-07-08 19:33:05Z aparajita $
-
 	global($fbx_self)
 	c_text($fbx_self)
 	$fbx_self := current file

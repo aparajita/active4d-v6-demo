@@ -3,8 +3,9 @@
 	<responsibilities>
 		I congratulate the user after a successful authentication.
 	</responsibilities>
+
 </fusedoc>
-*/ 
+*/
 
 fusebox.head.setTitle(fusebox.head.getTitle + "/Security Realms")
 %>
@@ -12,9 +13,9 @@ fusebox.head.setTitle(fusebox.head.getTitle + "/Security Realms")
 <div id="content">
 
   <h1>Security Realms</h1>
-  
-  <p>Welcome to the super-secret security realm! You have successfully been authenticated. 
-    From now on (until you quit your browser), any attempt to access 
+
+  <p>Welcome to the super-secret security realm! You have successfully been authenticated.
+    From now on (until you quit your browser), any attempt to access
     this page will automatically be authenticated by Active4D.</p>
 
 </div>

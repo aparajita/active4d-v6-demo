@@ -64,7 +64,7 @@ fusebox.head.setTitle(fusebox.head.getTitle + "/Images")
 
   <%
   	if (length($code) > 0)
-		execute($code)
+		    execute($code)
   %>
 
   <div class="hr"></div>
@@ -76,7 +76,7 @@ fusebox.head.setTitle(fusebox.head.getTitle + "/Images")
 
     <br>
 
-	<h2>The code:</h2>
+	  <h2>The code:</h2>
     <code><%=mac to html("<%" + $code + """%>\n<img src="/image.a4d<%=$query%>" alt="Image not available" />"""; *)%></code>
 
   </div>

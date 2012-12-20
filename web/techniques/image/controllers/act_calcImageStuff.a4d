@@ -50,7 +50,7 @@ $query := build query string(""; "id"; "caution-small"; "format"; "png" """
 
 	:($source = "file")
 		$code := """
-$query := build query string(""; "file"; "../web_static/images/add.gif" """
+$query := build query string(""; "file"; "../web_static/images/pencil.png" """
 
 
 	:($source = "method")

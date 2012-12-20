@@ -1,0 +1,1 @@
+NOTE: You must copy the Active4D and InternetCommands plugins (or links to them) into the Plugins folder before running the demo.
